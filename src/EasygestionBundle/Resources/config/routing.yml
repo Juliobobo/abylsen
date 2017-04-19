@@ -1,0 +1,11 @@
+easygestion_homepage:
+    path:     /
+    defaults: { _controller: EasygestionBundle:Accueil:accueil }
+
+easygestion_directeur:
+    path:     /directeur
+    defaults: { _controller: EasygestionBundle:Directeur:directeur }
+
+easygestion_ia:
+    path:     /ia
+    defaults: { _controller: EasygestionBundle:Ia:ia }
