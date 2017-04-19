@@ -6,7 +6,7 @@
        <div class="col-md-offset-1">
            
             <div class="col-md-3">
-              <a href="{{ path('easygestion_directeur') }}" id="teachers">
+              <a href="#" data-toggle="modal" data-target="#login-modal">
                   <div class="link">
                     <img src="{{ asset('img/logo.jpeg') }}" width="160px">
                     <div class="clear"></div><span></span>
@@ -41,6 +41,26 @@
               </a>
             </div>
        </div>    
-    </div>  
+    </div>
+                    
+    
+    {# Formulaire de Login #}
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" 
+        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                    <h1>Se connecter</h1><br>
+              <form>
+                    <input type="text" name="user" placeholder="Pseudo">
+                    <input type="password" name="pass" placeholder="Password">
+                    <input type="submit" name="login" class="login loginmodal-submit" value="Connexion">
+              </form>
+
+              <div class="login-help">
+                    <a href="#">Register</a> - <a href="#">Forgot Password</a>
+              </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

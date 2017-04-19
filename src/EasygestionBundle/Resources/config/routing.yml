@@ -2,6 +2,10 @@ easygestion_homepage:
     path:     /
     defaults: { _controller: EasygestionBundle:Accueil:accueil }
 
+easygestion_login:
+    path:     /login
+    defaults: { _controller: EasygestionBundle:Accueil:login }
+    
 easygestion_directeur:
     path:     /directeur
     defaults: { _controller: EasygestionBundle:Directeur:directeur }
