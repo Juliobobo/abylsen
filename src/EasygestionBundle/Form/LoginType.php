@@ -7,9 +7,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class LoginType extends AbstractType
 {
-    public fonction buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //Formulaire
+        $builder
+                ->add('Pseudo');
         
     }
     
+    public function getName()
+    {
+        return 'abylsen_easygestionbundle_login';
+    }
 }
