@@ -10,4 +10,9 @@ class IaController extends Controller
     {
         return $this->render('EasygestionBundle:Ia:ia.html.twig');
     }
+    
+    public function mesequipesAction()
+    {
+        return $this->render('EasygestionBundle:Ia:mesquipes.html.twig');
+    }
 }

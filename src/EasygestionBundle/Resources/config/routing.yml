@@ -4,7 +4,7 @@ easygestion_homepage:
 
 easygestion_login:
     path:     /login
-    defaults: { _controller: EasygestionBundle:Accueil:login }
+    defaults: { _controller: EasygestionBundle:Log:login }
     
 easygestion_directeur:
     path:     /directeur
@@ -13,3 +13,7 @@ easygestion_directeur:
 easygestion_ia:
     path:     /ia
     defaults: { _controller: EasygestionBundle:Ia:ia }
+    
+easygestion_mesequipes:
+    path:     /mesequipes
+    defaults: { _controller: EasygestionBundle:Ia:mesequipes }
