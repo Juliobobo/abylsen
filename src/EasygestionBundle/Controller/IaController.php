@@ -11,8 +11,18 @@ class IaController extends Controller
         return $this->render('EasygestionBundle:Ia:ia.html.twig');
     }
     
-    public function mesequipesAction()
+    public function besoinsAction()
     {
-        return $this->render('EasygestionBundle:Ia:mesquipes.html.twig');
+        return $this->render('EasygestionBundle:Ia:besoins.html.twig');
+    }
+    
+    public function teamAction()
+    {
+        return $this->render('EasygestionBundle:Ia:team.html.twig');
+    }
+    
+    public function projectsAction()
+    {
+        return $this->render('EasygestionBundle:Ia:projects.html.twig');
     }
 }

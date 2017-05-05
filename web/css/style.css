@@ -8,8 +8,9 @@ and open the template in the editor.
     Author     : julien.bonnardel
 */
 
-
 @import url(http://fonts.googleapis.com/css?family=Roboto);
+
+/***** Glyph ******/
 
 /****** LOGIN MODAL ******/
 .loginmodal-container {
@@ -105,3 +106,4 @@ and open the template in the editor.
 .login-help{
   font-size: 12px;
 }
+

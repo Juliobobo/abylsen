@@ -4,7 +4,7 @@
    <div class="container main" style="margin-top: 100px;">
        <div class="row">
             <div class="col-md-offset-3 col-md-3">
-                <a href="{{ path('easygestion_mesequipes') }}">
+                <a href="{{ path('easygestion_team') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="160px">
                         <div class="clear"></div><span>Mes équipes</span>
@@ -12,14 +12,24 @@
                 </a>
             </div>
             <div class="col-md-offset-1 col-md-3">
-                <a href="#">
+                <a href="{{ path('easygestion_projects') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="160px">
                         <div class="clear"></div><span>Mes Projets</span>
                     </div>
                 </a>
             </div>
-       </div>
+        </div>
+        <br/><br/>
+        <div class='row '>
+            <div style='font-size: 300%; color: red'  
+                class='col-md-offset-3  col-md-1 glyphicon glyphicon-warning-sign'>
+            </div>
+            <div class="algo_matching">
+                <p>Algorithme de Matching</p> 
+                <p>Algorithme de Matching</p> 
+            </div>
+        </div>
    </div>
 {% endblock %}
 

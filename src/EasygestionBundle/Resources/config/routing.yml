@@ -13,7 +13,19 @@ easygestion_directeur:
 easygestion_ia:
     path:     /ia
     defaults: { _controller: EasygestionBundle:Ia:ia }
-    
-easygestion_mesequipes:
-    path:     /mesequipes
-    defaults: { _controller: EasygestionBundle:Ia:mesequipes }
+
+easygestion_ajout_besoin:
+    path:     /ajoutbesoin
+    defaults: { _controller: EasygestionBundle:Gestion:ajout }
+
+easygestion_besoin:
+    path:     /besoin
+    defaults: { _controller: EasygestionBundle:Ia:besoins }
+
+easygestion_team:
+    path:     /team
+    defaults: { _controller: EasygestionBundle:Ia:team }
+
+easygestion_projects:
+    path:     /projects
+    defaults: { _controller: EasygestionBundle:Ia:projects }
