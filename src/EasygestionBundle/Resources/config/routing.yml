@@ -12,15 +12,15 @@ easygestion_directeur:
 
 easygestion_ia:
     path:     /ia
-    defaults: { _controller: EasygestionBundle:Ia:ia }
+    defaults: { _controller: EasygestionBundle:Ia:accueil }
 
+easygestion_mesbesoins:
+    path:     /ia/besoin
+    defaults: { _controller: EasygestionBundle:Mesbesoins:mesbesoins }
+    
 easygestion_ajout_besoin:
     path:     /ajoutbesoin
     defaults: { _controller: EasygestionBundle:Gestion:ajout }
-
-easygestion_besoin:
-    path:     /besoin
-    defaults: { _controller: EasygestionBundle:Ia:besoins }
 
 easygestion_team:
     path:     /team

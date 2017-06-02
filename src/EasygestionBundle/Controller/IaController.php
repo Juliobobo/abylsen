@@ -6,14 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class IaController extends Controller
 {
-    public function iaAction()
+    public function accueilAction()
     {
-        return $this->render('EasygestionBundle:Ia:ia.html.twig');
+        return $this->render('EasygestionBundle:Ia:accueil.html.twig');
     }
     
-    public function besoinsAction()
+    public function mesbesoinsAction()
     {
-        return $this->render('EasygestionBundle:Ia:besoins.html.twig');
+        return $this->render('EasygestionBundle:Ia:mesbesoins.html.twig');
     }
     
     public function teamAction()
