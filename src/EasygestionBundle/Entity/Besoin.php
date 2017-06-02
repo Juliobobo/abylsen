@@ -3,6 +3,7 @@
 namespace EasygestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use EasygestionBundle\Entity;
 
 /**
  * Besoin
@@ -69,7 +70,20 @@ class Besoin
      * @ORM\Column(name="duration", type="time")
      */
     private $duration;
-
+    
+    /**
+     * Many besoins have One ia.
+     * @ORM\ManyToOne(targetEntity="Ia")
+     * @ORM\JoinColumn(name="id_ia", referencedColumnName="id")
+     */
+    private $ia;
+    
+    /**
+     * Many besoins have One client.
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
+     */
+    private $client;
 
     /**
      * Get id
@@ -247,6 +261,53 @@ class Besoin
     public function getDuration()
     {
         return $this->duration;
+    }
+    
+    /**
+     * Set ia
+     *
+     * @param client $ia
+     *
+     * @return Besoin
+     */
+    public function setIa(Client  $ia)
+    {
+        $this->ia = $ia;
+
+        return $this;
+    }
+    
+    /**
+     * Get ia
+     *
+     * @return ia
+     */
+    public function getIa()
+    {
+        return $this->ia;
+    }
+    /**
+     * Set client
+     *
+     * @param client $client
+     *
+     * @return Besoin
+     */
+    public function setClient(Client  $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+    
+    /**
+     * Get client
+     *
+     * @return client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }
 

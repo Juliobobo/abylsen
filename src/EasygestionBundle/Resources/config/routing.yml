@@ -10,6 +10,9 @@ easygestion_directeur:
     path:     /directeur
     defaults: { _controller: EasygestionBundle:Directeur:directeur }
 
+#-------------------------------#
+# Partie Gestion des besoins IA #
+#-------------------------------#
 easygestion_ia:
     path:     /ia
     defaults: { _controller: EasygestionBundle:Ia:accueil }
@@ -18,9 +21,18 @@ easygestion_mesbesoins:
     path:     /ia/besoin
     defaults: { _controller: EasygestionBundle:Mesbesoins:mesbesoins }
     
-easygestion_ajout_besoin:
-    path:     /ajoutbesoin
+easygestion_mesbesoins_add:
+    path:     /ia/besoin/add
+    defaults: { _controller: EasygestionBundle:Mesbesoins:add }
+
+easygestion_mesbesoins_remove:
+    path:     /ia/besoin/remove/{id}
     defaults: { _controller: EasygestionBundle:Gestion:ajout }
+
+easygestion_mesbesoins_edit:
+    path:     /ia/besoin/remove/{id}
+    defaults: { _controller: EasygestionBundle:Gestion:ajout }
+#-------------------------------#
 
 easygestion_team:
     path:     /team
