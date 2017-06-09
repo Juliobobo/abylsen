@@ -19,20 +19,50 @@
     <div class="row">   
         {# Add client #}
         <a href="{{ path('easygestion_clients_add') }}" class="btn btn-success glyphicon glyphicon-plus"
-           data-toggle="modal" data-target="{{ path('easygestion_mesbesoins_add') }}">
+           data-toggle="modal" data-target="#add-client">
         </a>  
     </div>    
-        {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}
-                    
-                    
-            {{ form_widget(form) }}
+        
+        
+        
+        
+        
+        
+{# ----------------------- Formulaire ADD / Remove -------------------------- #}
+{# A factoriser  modif css #}
+    <div class="modal fade" id="add-client" tabindex="-1" role="dialog" 
+        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Nouveau client</h1><br>
+               {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}  
+                    {{ form_widget(form) }}
+                    <input type="submit" value="Create" class="btn btn-default pull-right" />
+                {{ form_end(form) }}    
+            </div>
+        </div>
+    </div>
+        
+    <div class="modal fade" id="remove-besoin" tabindex="-1" role="dialog" 
+        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Supprimer besoin</h1><br>
+                <form>
 
-                <input type="submit" value="Create" class="btn btn-default pull-right" />
-        {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{# -------------------------------------------------------------------------- #}   
+
+
+
+
     <br />
 {# ----------------------- Liste des besoins -------------------------------- #}   
     <div class="row">
-        {{ dump(clients) }}
+        
 
         
         <form>
