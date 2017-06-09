@@ -25,14 +25,14 @@ class Besoin
     /**
      * @var int
      *
-     * @ORM\Column(name="id_ia", type="integer", unique=true)
+     * @ORM\Column(name="id_ia", type="integer")
      */
     private $idIa;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="id_client", type="integer", unique=true)
+     * @ORM\Column(name="id_client", type="integer")
      */
     private $idClient;
 
@@ -53,21 +53,21 @@ class Besoin
     /**
      * @var \Date
      *
-     * @ORM\Column(name="date_creation", type="datetimetz")
+     * @ORM\Column(name="date_creation", type="date")
      */
     private $dateCreation;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="start", type="datetime")
+     * @ORM\Column(name="start", type="date")
      */
     private $start;
 
     /**
-     * @var \Date
+     * @var int
      *
-     * @ORM\Column(name="duration", type="time")
+     * @ORM\Column(name="duration", type="integer")
      */
     private $duration;
     
@@ -270,7 +270,7 @@ class Besoin
      *
      * @return Besoin
      */
-    public function setIa(Client  $ia)
+    public function setIa(Ia  $ia)
     {
         $this->ia = $ia;
 

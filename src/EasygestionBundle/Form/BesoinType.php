@@ -7,22 +7,24 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BesoinType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         //Formulaire
         $builder
                 ->add('status', ChoiceType::class, array(
+                        'placeholder' => 'Quel status ?',
                         'choices' => array(
                             'Non actif' => '0',
                             'Actif' => '1',
                         )
                 ))
                 ->add('priority', ChoiceType::class, array(
+                        'placeholder' => 'Quel priorité ?',
                         'choices' => array(
                             '1' => '1',
                             '2' => '2',
@@ -30,6 +32,7 @@ class BesoinType extends AbstractType
                         )
                 ))
                 ->add('client', EntityType::class, array(
+                        'placeholder' => 'Quel client ?',
                         'class' => 'EasygestionBundle:Client',
                         'choice_label' => 'name',
                 ))
@@ -41,12 +44,9 @@ class BesoinType extends AbstractType
                         ),
                         'format' => 'yyyy-MM-dd',
                 ))
-                ->add('duration', DateIntervalType::class, array(
+                ->add('duration', ChoiceType::class, array(
                         'placeholder' => 'Mois',
-                        'with_years'  => false,
-                        'with_months' => true,
-                        'with_days'   => false,
-                        'with_hours'  => false,
+                        'choices' => range(0, 12),
                 ));
         
     }

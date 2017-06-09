@@ -1,0 +1,63 @@
+{% extends "::layout/layout.html.twig" %}
+
+{% block body %}
+<div class="container">
+    {# Message #}
+    <div class="row">
+        {{ app.request.get('msg') }}
+    </div>
+    
+    {# Retour #}
+    <div class="row">
+        <a href="{{ path('easygestion_ia') }}">Retour</a>
+    </div>
+    
+    <div class="row">
+        <h1><strong>Les clients</strong></h1>
+    </div>
+    
+    <div class="row">   
+        {# Add client #}
+        <a href="{{ path('easygestion_clients_add') }}" class="btn btn-success glyphicon glyphicon-plus"
+           data-toggle="modal" data-target="{{ path('easygestion_mesbesoins_add') }}">
+        </a>  
+    </div>    
+        {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}
+                    
+                    
+            {{ form_widget(form) }}
+
+                <input type="submit" value="Create" class="btn btn-default pull-right" />
+        {{ form_end(form) }}
+    <br />
+{# ----------------------- Liste des besoins -------------------------------- #}   
+    <div class="row">
+        {{ dump(clients) }}
+
+        
+        <form>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in clients %}
+                        <tr>
+                            <td>{{ c.id }}</td>
+                            <td>{{ c.name }}</td>
+                            <td>
+                                <a href="{{ path('easygestion_mesbesoins_edit', {'id': c.id}) }}" class="btn glyphicon glyphicon-wrench"></a>
+                                <a href="{{ path('easygestion_mesbesoins_remove', {'id': c.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

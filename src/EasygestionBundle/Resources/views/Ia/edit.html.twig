@@ -1,0 +1,23 @@
+{% extends "::layout/layout.html.twig" %}
+
+{% block body %}
+   <div class="container main" style="margin-top: 100px;">
+        <div class='row '>
+            <p><a href="{{ path('easygestion_mesbesoins') }}">Retour</a></p>
+                {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}
+                    
+                    
+                    {{ form_widget(form) }}
+
+                    <input type="submit" value="Create" class="btn btn-default pull-right" />
+                
+                    {{ form_end(form) }}
+            
+            {% if msg %}
+                <p class="control-group success">{{ msg }}</p>
+            {% endif %}
+        </div>
+        
+   </div>
+{% endblock %}
+

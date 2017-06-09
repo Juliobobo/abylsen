@@ -3,19 +3,16 @@
 {% block body %}
    <div class="container main" style="margin-top: 100px;">
         <div class='row '>
-           
-                {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}
-                    
-                    
-                    {{ form_widget(form) }}
-
-                            <input type="submit" value="Create" class="btn btn-default pull-right" />
-                {{ form_end(form) }}
             
-            {% if msg %}
-                <p class="control-group success">{{ msg }}</p>
-            {% endif %}
+                            {{ besoin.id }}
+                            {{ besoin.status }}
+                            {{ besoin.priority }}
+                            {{ besoin.client.name }}
+                            
+                            
+                            {{ form_widget(form) }}
         </div>
+        
    </div>
 {% endblock %}
 

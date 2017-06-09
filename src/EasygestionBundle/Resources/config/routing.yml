@@ -5,10 +5,13 @@ easygestion_homepage:
 easygestion_login:
     path:     /login
     defaults: { _controller: EasygestionBundle:Log:login }
-    
-easygestion_directeur:
-    path:     /directeur
-    defaults: { _controller: EasygestionBundle:Directeur:directeur }
+
+#-----------------------------------#
+# Partie Gestion des besoins Julien #
+#-----------------------------------#
+easygestion_gestion:
+    path:     /gestion
+    defaults: { _controller: EasygestionBundle:Gestion:show }
 
 #-------------------------------#
 # Partie Gestion des besoins IA #
@@ -27,12 +30,24 @@ easygestion_mesbesoins_add:
 
 easygestion_mesbesoins_remove:
     path:     /ia/besoin/remove/{id}
-    defaults: { _controller: EasygestionBundle:Gestion:ajout }
+    defaults: { _controller: EasygestionBundle:Mesbesoins:remove }
 
 easygestion_mesbesoins_edit:
-    path:     /ia/besoin/remove/{id}
-    defaults: { _controller: EasygestionBundle:Gestion:ajout }
-#-------------------------------#
+    path:     /ia/besoin/edit/{id}
+    defaults: { _controller: EasygestionBundle:Mesbesoins:edit }
+
+#---------------------------#
+# Partie Gestion des client #
+#---------------------------#
+easygestion_clients:
+    path:     /client
+    defaults: { _controller: EasygestionBundle:Client:clients }
+    
+easygestion_clients_add:
+    path:     /client
+    defaults: { _controller: EasygestionBundle:Client:add }
+
+
 
 easygestion_team:
     path:     /team

@@ -5,7 +5,7 @@ namespace EasygestionBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EasygestionBundle\Entity\Besoin;
 use EasygestionBundle\Form\BesoinType;
-
+use Symfony\Component\HttpFoundation\Request;
 
 class MesbesoinsController extends Controller
 {
@@ -33,8 +33,6 @@ class MesbesoinsController extends Controller
                         'client' => $client
                         ));
         
-        
-        
         return $this->render('EasygestionBundle:Ia:mesbesoins.html.twig',
                                 array(
                                     'ia' => $ia,
@@ -43,31 +41,111 @@ class MesbesoinsController extends Controller
                                 ));
     }
     
-    public function addAction(){
+    public function addAction(Request $request){
         
         $msg = '';
         $besoin = new Besoin();
         
         $form = $this->createForm(BesoinType::class, $besoin);
         
+        $form->handleRequest($request);
         
-        
-        /*if($this->get('request')->getMethod() == 'POST'){
-            $form->bind($this->get('request'));
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
             
-            if($form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($besoin);
-                $em->flush();
+            //A changer truc de connexion
+            $ia = $em->getRepository('EasygestionBundle:Ia')->find(1); 
+            $besoin->setIa($ia);
+            
+            //Prend la date actuelle lors de l'ajout
+            $besoin->setDateCreation(new \DateTime('now'));
+            
+            $em->persist($besoin);
+            $em->flush();
                 
-                $msg = 'Besoin ajouté avec succès !';
-            }
-        }*/
+            $msg = 'Besoin ajouté avec succès !';
+            
+            return $this->redirect($this->generateUrl(
+                        'easygestion_mesbesoins',
+                        array(
+                            'msg' => $msg,
+                        )
+                ));
+        }else{
+            $msg = 'Erreur !';
+        }
         
-       return $this->render('EasygestionBundle:Ia:test.html.twig',
+        return $this->render('EasygestionBundle:Ia:add.html.twig',
                                 array(
                                     'form' => $form->createView(),
                                     'msg' => $msg,
+                                ));
+    }
+    
+    public function removeAction($id){
+        
+        $em = $this->getDoctrine()->getManager();
+        $besoin = $em->find('EasygestionBundle:Besoin', $id);
+
+        if (!$besoin) 
+        {
+          throw new NotFoundHttpException("Le besoin n'existe pas !");
+        }
+        
+        $em->remove($besoin);
+        $em->flush();        
+        
+        return $this->redirect($this->generateUrl('easygestion_mesbesoins'));
+    }
+    
+    public function editAction($id, Request $request){
+        
+        $message = '';
+        $em = $this->getDoctrine()->getManager();
+        
+        if (isset($id)){
+           $besoin = $em->find('EasygestionBundle:Besoin', $id);
+           
+           if (!$besoin){
+               $message = 'Erreur !';
+           }
+        }else{
+            $message = 'Le besoin n\'existe pas';
+        }
+        
+        $form = $this->createForm(BesoinType::class, $besoin);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            
+            //A changer truc de connexion
+            $ia = $em->getRepository('EasygestionBundle:Ia')->find(1); 
+            $besoin->setIa($ia);
+            
+            //Prend la date actuelle lors de l'ajout
+            $besoin->setDateCreation(new \DateTime('now'));
+            
+            $em->persist($besoin);
+            $em->flush();
+                
+            $message = 'Besoin modifié avec succès !';
+            
+            return $this->redirect($this->generateUrl(
+                        'easygestion_mesbesoins',
+                        array(
+                            'msg' => $message,
+                        )
+                ));
+        } else {
+            $message = 'Erreur !';
+        }
+        
+        
+        return $this->render('EasygestionBundle:Ia:add.html.twig',
+                                array(
+                                    'besoin' => $besoin,
+                                    'form' => $form->createView(),
+                                    'msg' => $message,
                                 ));
     }
 }

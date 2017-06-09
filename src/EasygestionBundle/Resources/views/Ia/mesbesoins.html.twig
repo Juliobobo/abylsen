@@ -2,6 +2,16 @@
 
 {% block body %}
 <div class="container">
+    {# Message #}
+    <div class="row">
+        {{ app.request.get('msg') }}
+    </div>
+    
+    {# Retour #}
+    <div class="row">
+        <a href="{{ path('easygestion_ia') }}">Retour</a>
+    </div>
+    
     <div class="row">
         <h1>{{ ia.initials | upper }} - <strong>Mes Besoins</strong></h1>
     </div>
@@ -9,14 +19,14 @@
     <div class="row">   
         {# Add besoin #}
         <a href="{{ path('easygestion_mesbesoins_add') }}" class="btn btn-success glyphicon glyphicon-plus"
-           data-toggle="modal" data-target="#add-besoin">
+           data-toggle="modal" data-target="{{ path('easygestion_mesbesoins_add') }}">
         </a>
         {# Remove besoin #}
         <a href="#" class="btn btn-danger glyphicon glyphicon-minus"
            data-toggle="modal" data-target="#remove-besoin">
         </a>    
     </div>
-    
+
 {#------------------------------- Message ----------------------------------- #}
 {#    {% if msg %}
          <p class="control-group success">{{ msg }}</p>
@@ -30,9 +40,8 @@
         <div class="modal-dialog">
             <div class="loginmodal-container">
                 <h1>Nouveau besoin</h1><br>
-                <form action="{{ path('easygestion_mesbesoins_add') }}" method="post">
-                    
-                </form>
+               
+                
             </div>
         </div>
     </div>
@@ -78,8 +87,8 @@
                             <td>Info</td>
                             <td>Cédric Durand</td>
                             <td>
-                                <a href="#" class="btn glyphicon glyphicon-wrench"></a>
-                                <a href="#" class="btn glyphicon glyphicon-trash"></a> 
+                                <a href="{{ path('easygestion_mesbesoins_edit', {'id': b.id}) }}" class="btn glyphicon glyphicon-wrench"></a>
+                                <a href="{{ path('easygestion_mesbesoins_remove', {'id': b.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
                             </td>
                         </tr>
                     {% endfor %}

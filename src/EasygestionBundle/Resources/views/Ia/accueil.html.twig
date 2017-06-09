@@ -1,7 +1,15 @@
 {% extends "::layout/layout.html.twig" %}
 
 {% block body %}
-   <div class="container main" style="margin-top: 100px;">
+   <div class="container">
+       <p><a href="{{ path('easygestion_homepage') }}">Retour</a></p>
+       
+       <div class="row">
+           <a href="{{ path('easygestion_clients') }}">
+               Ajouter client
+           </a>
+       </div>
+       
        <div class="row">
             <div class="col-md-offset-3 col-md-3">
                 <a href="{{ path('easygestion_team') }}">
