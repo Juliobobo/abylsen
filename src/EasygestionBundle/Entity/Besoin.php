@@ -51,21 +51,21 @@ class Besoin
     private $priority;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="date_creation", type="datetimetz")
      */
     private $dateCreation;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="start", type="datetime")
      */
     private $start;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="duration", type="time")
      */

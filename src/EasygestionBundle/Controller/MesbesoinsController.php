@@ -4,7 +4,7 @@ namespace EasygestionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EasygestionBundle\Entity\Besoin;
-use EasygestionBundle\Form\BesoinForm;
+use EasygestionBundle\Form\BesoinType;
 
 
 class MesbesoinsController extends Controller
@@ -48,9 +48,11 @@ class MesbesoinsController extends Controller
         $msg = '';
         $besoin = new Besoin();
         
-        $form = $this->createForm(new BesoinForm());
+        $form = $this->createForm(BesoinType::class, $besoin);
         
-        if($this->get('request')->getMethod() == 'POST'){
+        
+        
+        /*if($this->get('request')->getMethod() == 'POST'){
             $form->bind($this->get('request'));
             
             if($form->isValid()){
@@ -60,9 +62,9 @@ class MesbesoinsController extends Controller
                 
                 $msg = 'Besoin ajouté avec succès !';
             }
-        }
+        }*/
         
-       return $this->render('EasygestionBundle:Ia:mesbesoins.html.twig',
+       return $this->render('EasygestionBundle:Ia:test.html.twig',
                                 array(
                                     'form' => $form->createView(),
                                     'msg' => $msg,
