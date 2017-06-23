@@ -18,7 +18,7 @@ class ClientController extends Controller
         
         if(null === $clients){
             throw new NotFoundHttpException("Client doesn't exist");
-        }
+        }   
         
         $msg = '';
         $client = new Client();

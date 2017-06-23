@@ -74,7 +74,7 @@ class Besoin
     /**
      * @var string
      *
-     * @ORM\Column(name="solution", type="string", length=255, nullable=true)
+     * @ORM\Column(name="solution", type="string", length=255)
      */
     private $solution;
     
@@ -346,29 +346,5 @@ class Besoin
     public function getArchive()
     {
         return $this->archive;
-    }
-
-    /**
-     * Set solution
-     *
-     * @param string $solution
-     *
-     * @return Besoin
-     */
-    public function setSolution($solution)
-    {
-        $this->solution = $solution;
-
-        return $this;
-    }
-
-    /**
-     * Get solution
-     *
-     * @return string
-     */
-    public function getSolution()
-    {
-        return $this->solution;
     }
 }

@@ -1,7 +1,18 @@
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+sg_datatables_bundle:
+    resource: "@SgDatatablesBundle/Controller/"
+    type:     annotation
+    
 easygestion:
-    resource: "@EasygestionBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@EasygestionBundle/Controller"
+    type: annotation
 
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+easygestion_routing:
+    resource: "@EasygestionBundle/Resources/config/routing.yml"
+    prefix:   /

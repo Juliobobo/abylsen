@@ -59,6 +59,7 @@ class MesbesoinsController extends Controller
             
             //Prend la date actuelle lors de l'ajout
             $besoin->setDateCreation(new \DateTime('now'));
+            $besoin->setArchive(0);
             
             $em->persist($besoin);
             $em->flush();
@@ -82,20 +83,30 @@ class MesbesoinsController extends Controller
                                 ));
     }
     
-    public function removeAction($id){
+    public function archiveAction($id){
         
         $em = $this->getDoctrine()->getManager();
-        $besoin = $em->find('EasygestionBundle:Besoin', $id);
 
-        if (!$besoin) 
-        {
-          throw new NotFoundHttpException("Le besoin n'existe pas !");
+        if (isset($id)){
+           $besoin = $em->find('EasygestionBundle:Besoin', $id);
+           
+           if (!$besoin){
+               $message = 'Erreur !';
+           }
+        }else{
+            $message = 'Le besoin n\'existe pas';
         }
         
-        $em->remove($besoin);
-        $em->flush();        
+        $besoin->setArchive(1);
+        $em->persist($besoin);
+        $em->flush();
+                
+        $message = 'Besoin archivé';
         
-        return $this->redirect($this->generateUrl('easygestion_mesbesoins'));
+        return $this->redirect($this->generateUrl('easygestion_mesbesoins',
+                array(
+                     'msg' => $message,
+                )));
     }
     
     public function editAction($id, Request $request){

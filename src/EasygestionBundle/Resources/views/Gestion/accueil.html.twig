@@ -34,22 +34,24 @@
                 </thead>
                 <tbody>
                     {% for b in besoins %}
-                        <tr>
-                            <td>{{ b.status }}</td>
-                            <td>{{ b.dateCreation.date | date('d-m-Y') }}</td>
-                            <td>{{ b.ia.initials | upper}}</td>
-                            <td>{{ b.priority }}</td>
-                            <td>{{ b.client.name }}</td>
-                            <td>Info</td>
-                            <td>Développeur C#</td>
-                            <td>{{ b.start.date | date('d-m-Y') }}</td>
-                            <td>{{ b.duration ~ ' mois'}}</td>
-                            <td>Cédric Durand</td>
-                            <td>
-                                <a href="{{ path('easygestion_mesbesoins_edit', {'id': b.id}) }}" class="btn glyphicon glyphicon-wrench"></a>
-                                <a href="{{ path('easygestion_mesbesoins_remove', {'id': b.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
-                            </td>
-                        </tr>
+                        {% if b.archive == 0 %}
+                            <tr>
+                                <td>{{ b.status }}</td>
+                                <td>{{ b.dateCreation.date | date('d-m-Y') }}</td>
+                                <td>{{ b.ia.initials | upper}}</td>
+                                <td>{{ b.priority }}</td>
+                                <td>{{ b.client.name }}</td>
+                                <td>Info</td>
+                                <td>Développeur C#</td>
+                                <td>{{ b.start.date | date('d-m-Y') }}</td>
+                                <td>{{ b.duration ~ ' mois'}}</td>
+                                <td>Cédric Durand</td>
+                                <td>
+                                    <a href="{{ path('easygestion_mesbesoins_edit', {'id': b.id}) }}" class="btn glyphicon glyphicon-wrench"></a>
+                                    <a href="{{ path('easygestion_mesbesoins_archive', {'id': b.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

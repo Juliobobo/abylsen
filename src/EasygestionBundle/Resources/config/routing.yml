@@ -28,9 +28,9 @@ easygestion_mesbesoins_add:
     path:     /ia/besoin/add
     defaults: { _controller: EasygestionBundle:Mesbesoins:add }
 
-easygestion_mesbesoins_remove:
-    path:     /ia/besoin/remove/{id}
-    defaults: { _controller: EasygestionBundle:Mesbesoins:remove }
+easygestion_mesbesoins_archive:
+    path:     /ia/besoin/archive/{id}
+    defaults: { _controller: EasygestionBundle:Mesbesoins:archive }
 
 easygestion_mesbesoins_edit:
     path:     /ia/besoin/edit/{id}

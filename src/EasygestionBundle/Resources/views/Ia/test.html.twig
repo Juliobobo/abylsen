@@ -1,18 +1,7 @@
-{% extends "::layout/layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block body %}
-   <div class="container main" style="margin-top: 100px;">
-        <div class='row '>
-            
-                            {{ besoin.id }}
-                            {{ besoin.status }}
-                            {{ besoin.priority }}
-                            {{ besoin.client.name }}
-                            
-                            
-                            {{ form_widget(form) }}
-        </div>
-        
-   </div>
+<h2>Besoins</h2>
+    {{ sg_datatables_render(datatable) }}
 {% endblock %}
 
