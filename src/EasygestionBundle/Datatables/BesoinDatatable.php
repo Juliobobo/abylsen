@@ -55,6 +55,13 @@ class BesoinDatatable extends AbstractDatatable
             )
         ));
         
+        $this->events->set(array(
+            'xhr' => array(
+                'template' => ':event:event.js.twig',
+                'vars' => array('table_name' => $this->getName()),
+            ),
+        ));
+        
         $this->columnBuilder
             ->add('status', Column::class, array(
                 'title' => 'Status',
@@ -62,15 +69,12 @@ class BesoinDatatable extends AbstractDatatable
                 
                 'editable' => array(SelectEditable::class,
                     array(
-                        'editable_if' => function($row) {
-                            return true;
-                        },
                     
-                        'source' => array(
+                       'source' => array(
                             array('value' => 1),
                             array('value' => 0),
                         ),
-                        'mode' => 'inline',
+                        'mode' => 'popup',
                         'empty_text' => '',
                     ))
                 ))
@@ -88,7 +92,18 @@ class BesoinDatatable extends AbstractDatatable
                 ))
             ->add('solution', Column::class, array(
                 'title' => 'Solution',
-                ))
+                'filter' => array(TextFilter::class,
+                    array(
+                        'cancel_button' => true,
+                    )
+                ),
+                'editable' => array(TextEditable::class,
+                    array(
+                        'placeholder' => '???',
+                        'empty_text' => 'Vide',
+                    )
+                ),
+            ))
             ->add('ia.initials', Column::class, array(
                 'title' => 'IA',
                 ))
