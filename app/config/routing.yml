@@ -15,7 +15,4 @@ easygestion:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
-
-easygestion_routing:
-    resource: "@EasygestionBundle/Resources/config/routing.yml"
-    prefix:   /
+    
