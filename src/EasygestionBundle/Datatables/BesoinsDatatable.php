@@ -127,7 +127,7 @@ class BesoinsDatatable extends AbstractDatatable
                     )
                 ),
             ))
-            ->add('ia.initials', Column::class, array(
+            ->add('createdBy.initials', Column::class, array(
                 'title' => 'IA',
                 'searchable' => false,
             ))
