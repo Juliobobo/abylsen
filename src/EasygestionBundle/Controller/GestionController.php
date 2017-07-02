@@ -64,7 +64,7 @@ class GestionController extends Controller
      *
      * @Route("/ia", name="besoins_ia", options = {"expose" = true})
      * @Method("GET")
-     * @Security("has_role('ROLE_USER')") and besoin.isOwner(ia)
+     * @Security("has_role('ROLE_USER') and besoin.isOwner(ia)")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -133,24 +133,28 @@ class GestionController extends Controller
      * Archiver un besoin.
      *
      * @param $id
+     * @param $besoin
      *
      * @Route("/{id}", name="besoin_archive")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER') and besoin.isOwner(user)")
      * 
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function archiveAction($id)
+    public function archiveAction($id, Besoin $besoin)
     {
         $em = $this->getDoctrine()->getManager();
-
-        if (isset($id)){
-           $besoin = $em->find('EasygestionBundle:Besoin', $id);
+        
+        if($id == $besoin->getId()){
+            $besoin->setArchive(1);
+            $em->persist($besoin);
+            $em->flush();
         }
         
-        $besoin->setArchive(1);
-        $em->persist($besoin);
-        $em->flush();
-
+        if($besoin->isOwner($this->getUser())){
+            return $this->redirectToRoute('besoins_ia');
+        }
+        
         return $this->redirectToRoute('gestion_index');
     }
 

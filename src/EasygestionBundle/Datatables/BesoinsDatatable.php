@@ -130,6 +130,9 @@ class BesoinsDatatable extends AbstractDatatable
             ->add('createdBy.initials', Column::class, array(
                 'title' => 'IA',
                 'searchable' => false,
+                //'add_if' => function(){
+                  //  return !$this->authorizationChecker->isGranted('ROLE_USER');
+                //},
             ))
             ->add('client.name', Column::class, array(
                 'title' => 'Client',
