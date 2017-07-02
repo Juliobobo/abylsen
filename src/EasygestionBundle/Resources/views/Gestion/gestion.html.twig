@@ -1,18 +1,23 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-<div class="container main">
-    <div class="row">
+    <div>
         <a href="{{ path('homepage') }}">Retour</a>
     </div>
     
-    <div class="row">
+    <div>
         <h1><strong>Réunion bizz - Les Besoins</strong></h1>
     </div>
     
-    <div class="row">
+    <div>
+        <a href="{{ path('besoin_new') }}" class="btn btn-success glyphicon glyphicon-plus"></a>
+    </div>
+    
+    <br />
+    
+    <div>
         {{ sg_datatables_render(datatable) }}
     </div>
-</div>
+   
 {% endblock %}
 

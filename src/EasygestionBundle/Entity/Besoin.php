@@ -3,7 +3,9 @@
 namespace EasygestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use EasygestionBundle\Entity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Besoin
@@ -21,13 +23,6 @@ class Besoin
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_ia", type="integer")
-     */
-    private $idIa;
 
     /**
      * @var int
@@ -51,16 +46,16 @@ class Besoin
     private $priority;
 
     /**
-     * @var \Date
+     * @var \datetime
      *
-     * @ORM\Column(name="date_creation", type="date")
+     * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
 
     /**
-     * @var \Date
+     * @var \datetime
      *
-     * @ORM\Column(name="start", type="date")
+     * @ORM\Column(name="start", type="datetime")
      */
     private $start;
 
@@ -86,11 +81,12 @@ class Besoin
     private $archive;
     
     /**
-     * Many besoins have One ia.
-     * @ORM\ManyToOne(targetEntity="Ia")
-     * @ORM\JoinColumn(name="id_ia", referencedColumnName="id")
+     * @var Ia
+     *
+     * @Gedmo\Blameable(on="create")
+     * @ORM\ManyToOne(targetEntity="Ia", inversedBy="besoins")
      */
-    private $ia;
+    private $createdBy;
     
     /**
      * Many besoins have One client.
@@ -98,7 +94,16 @@ class Besoin
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
-
+    
+    /**
+     * Besoin constructor.
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+        $this->archive = 0;
+    }
+    
     /**
      * Get id
      *
@@ -107,30 +112,6 @@ class Besoin
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idIa
-     *
-     * @param integer $idIa
-     *
-     * @return Besoin
-     */
-    public function setIdIa($idIa)
-    {
-        $this->idIa = $idIa;
-
-        return $this;
-    }
-
-    /**
-     * Get idIa
-     *
-     * @return int
-     */
-    public function getIdIa()
-    {
-        return $this->idIa;
     }
 
     /**
@@ -278,28 +259,29 @@ class Besoin
     }
     
     /**
-     * Set ia
+     * Set createdBy
      *
-     * @param client $ia
+     * @param Ia $createdBy
      *
      * @return Besoin
      */
-    public function setIa(Ia  $ia)
+    public function setCreatedBy(Ia  $createdBy = null)
     {
-        $this->ia = $ia;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
     
     /**
-     * Get ia
+     * Get createdBy
      *
      * @return ia
      */
-    public function getIa()
+    public function getCreatedBy()
     {
-        return $this->ia;
+        return $this->createdBy;
     }
+    
     /**
      * Set client
      *

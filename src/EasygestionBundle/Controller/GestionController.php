@@ -7,9 +7,11 @@ use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use EasygestionBundle\Entity\Besoin;
+use EasygestionBundle\Form\BesoinType;
 
 /**
  * Post controller.
@@ -21,16 +23,17 @@ use EasygestionBundle\Entity\Besoin;
 class GestionController extends Controller
 {
     /**
-     * Lists besoins.
+     * Lister tous les besoins.
      *
      * @param Request $request
      *
      * @Route("/", name="gestion_index")
      * @Method("GET")
-     *
+     * @Security("has_role('ROLE_ADMIN')")
+     * 
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function listAllAction(Request $request)
     {
         $isAjax = $request->isXmlHttpRequest();
       
@@ -43,9 +46,43 @@ class GestionController extends Controller
             $responseService->setDatatable($datatable);
 
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $datatableQueryBuilder->buildQuery();
+            $datatableQueryBuilder->buildQuery();                    
 
-            //dump($datatableQueryBuilder->getQb()->getDQL()); die();
+            return $responseService->getResponse();
+        }
+
+        return $this->render('EasygestionBundle:gestion:gestion.html.twig', array(
+            'datatable' => $datatable,
+        ));
+    }
+    
+    
+    /**
+     * Liste des besoins d'un IA
+     *
+     * @param Request $request
+     * @param Post    $post
+     *
+     * @Route("/ia", name="besoins_ia", options = {"expose" = true})
+     * @Method("GET")
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function besoinsIaAction(Request $request)
+    {
+        $isAjax = $request->isXmlHttpRequest();
+      
+        /** @var DatatableInterface $datatable */
+        $datatable = $this->get('sg_datatables.factory')->create(BesoinsDatatable::class);
+        $datatable->buildDatatable();
+
+        if ($isAjax) {
+            $responseService = $this->get('sg_datatables.response');
+            $responseService->setDatatable($datatable);
+
+            $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
+            $datatableQueryBuilder->buildQuery();                    
 
             return $responseService->getResponse();
         }
@@ -56,28 +93,61 @@ class GestionController extends Controller
     }
     
     /**
-     * Supprimer un besoin.
+     * Creates a new Besoin.
      *
      * @param Request $request
-     * @param Besoin  $besoin
      *
-     * @Route("/{id}", name="besoin_delete")
-     * @Method("DELETE")
+     * @Route("/new", name="besoin_new")
+     * @Method({"GET", "POST"})
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function deleteAction(Request $request, Besoin $besoin)
+    public function newAction(Request $request)
     {
-        $form = $this->createDeleteForm($post);
+        $besoin = new Besoin();
+        $form = $this->createForm(BesoinType::class, $besoin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($post);
+            
+            $besoin->setArchive(0);
+            
+            $em->persist($besoin);
             $em->flush();
+
+            return $this->redirectToRoute('gestion_index', array('id' => $besoin->getId()));
         }
 
-        return $this->redirectToRoute('post_index');
+        return $this->render('EasygestionBundle:gestion:new.html.twig', array(
+            'besoin' => $besoin,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * Archiver un besoin.
+     *
+     * @param $id
+     *
+     * @Route("/{id}", name="besoin_archive")
+     * @Method({"GET", "POST"})
+     * 
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function archiveAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (isset($id)){
+           $besoin = $em->find('EasygestionBundle:Besoin', $id);
+        }
+        
+        $besoin->setArchive(1);
+        $em->persist($besoin);
+        $em->flush();
+
+        return $this->redirectToRoute('gestion_index');
     }
 
 

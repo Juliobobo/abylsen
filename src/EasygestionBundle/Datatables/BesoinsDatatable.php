@@ -61,7 +61,7 @@ class BesoinsDatatable extends AbstractDatatable
             ),
         )); */
         
-        $this->columnBuilder
+        $this->columnBuilder 
             ->add('status', Column::class, array(
                 'title' => 'Status',
                 'filter' => array(NumberFilter::class, array(
@@ -135,25 +135,41 @@ class BesoinsDatatable extends AbstractDatatable
                 'title' => 'Client',
                 'searchable' => false,
             ))
-            /*->add(null, ActionColumn::class, array(
+            ->add('archive', Column::class, array(
+                'title' => 'Archive',
+                'filter' => array(NumberFilter::class, array(
+                    'search_type' =>'eq',
+                    'type' =>'number',
+                    'min' => '0',
+                    'max' => '1',
+                    'initial_search' => '0',
+                    'show_label' => true,
+                )),
+            ))
+            ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(
                     array(
-                        'route' => 'besoin_show',
+                      'route' => 'besoin_archive',
                         'route_parameters' => array(
                             'id' => 'id',
                         ),
-                        //'label' => $this->translator->trans('sg.datatables.actions.show'),
-                        'icon' => 'glyphicon glyphicon-eye-open',
+                        'icon' => 'glyphicon glyphicon-folder-close',
                         'attributes' => array(
                             'rel' => 'tooltip',
-                            //'title' => $this->translator->trans('sg.datatables.actions.show'),
                             'class' => 'btn btn-primary btn-xs',
                             'role' => 'button',
                         ),
+                        'render_if' => function ($row) {
+                            if($row['archive'] == 1){
+                                return false;
+                            }
+                            
+                            return true;
+                        },
                     ),
                 )
-            ))*/;
+            ));
     }
 
     /**

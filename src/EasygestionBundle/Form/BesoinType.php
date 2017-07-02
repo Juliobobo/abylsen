@@ -36,6 +36,11 @@ class BesoinType extends AbstractType
                         'class' => 'EasygestionBundle:Client',
                         'choice_label' => 'name',
                 ))
+                ->add('ia', EntityType::class, array(
+                        'placeholder' => 'Ia ?',
+                        'class' => 'EasygestionBundle:Ia',
+                        'choice_label' => 'initials',
+                ))
                 ->add('start', DateType::class, array(
                         'placeholder' => array(
                             'year' => 'Année',

@@ -4,6 +4,7 @@ namespace EasygestionBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Ia
@@ -27,12 +28,22 @@ class Ia extends BaseUser
      */
     private $initials;
     
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Besoin", mappedBy="createdBy")
+     */
+    protected $besoins;
+    
+    /**
+     * Ia constructor.
+     */
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->besoins = new ArrayCollection();
     }
-    
+        
     /**
      * Set initials
      *
@@ -56,5 +67,44 @@ class Ia extends BaseUser
     {
         return $this->initials;
     }
+    
+    /**
+     * Add besoin.
+     *
+     * @param Besoin $besoin
+     *
+     * @return $this
+     */
+    public function addBesoin(Besoin $besoin)
+    {
+        $this->besoins[] = $besoin;
+
+        return $this;
+    }
+
+    /**
+     * Remove besoin.
+     *
+     * @param Besoin $besoin
+     *
+     * @return $this
+     */
+    public function removePost(Besoin $besoin)
+    {
+        $this->besoins->removeElement($besoin);
+
+        return $this;
+    }
+
+    /**
+     * Get besoins.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBesoins()
+    {
+        return $this->besoins;
+    }
+    
 }
 

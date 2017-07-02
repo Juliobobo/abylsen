@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h2>Nouveau besoin</h2>
+    <hr>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Créer" class="btn btn-primary" />
+    {{ form_end(form) }}
+
+    <hr>
+    <a href="{{ path('gestion_index') }}" class="btn btn-primary">Revenir à la liste</a>
+{% endblock %}
