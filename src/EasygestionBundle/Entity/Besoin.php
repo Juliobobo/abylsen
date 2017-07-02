@@ -104,6 +104,18 @@ class Besoin
         $this->archive = 0;
     }
     
+     /**
+     * Is the given Ia the owner of this need
+     *
+     * @param Ia $ia
+     *
+     * @return bool
+     */
+    public function isOwner(Ia $ia)
+    {
+        return $ia === $this->getCreatedby();
+    }
+    
     /**
      * Get id
      *

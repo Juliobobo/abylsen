@@ -61,11 +61,10 @@ class GestionController extends Controller
      * Liste des besoins d'un IA
      *
      * @param Request $request
-     * @param Post    $post
      *
      * @Route("/ia", name="besoins_ia", options = {"expose" = true})
      * @Method("GET")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_USER')") and besoin.isOwner(ia)
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -83,11 +82,16 @@ class GestionController extends Controller
 
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
             $datatableQueryBuilder->buildQuery();                    
+            
+            /** @var QueryBuilder $qb */
+            $qb = $datatableQueryBuilder->getQb();
+            $qb->andWhere('createdBy.initials = :initials');
+            $qb->setParameter('initials', $this->getUser()->getInitials());
 
             return $responseService->getResponse();
         }
 
-        return $this->render('EasygestionBundle:gestion:gestion.html.twig', array(
+        return $this->render('EasygestionBundle:ia:mesbesoins.html.twig', array(
             'datatable' => $datatable,
         ));
     }
