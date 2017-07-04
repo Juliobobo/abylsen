@@ -64,7 +64,7 @@ class GestionController extends Controller
      *
      * @Route("/ia", name="besoins_ia", options = {"expose" = true})
      * @Method("GET")
-     * @Security("has_role('ROLE_USER') and besoin.isOwner(ia)")
+     * @Security("has_role('ROLE_USER')")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -137,7 +137,7 @@ class GestionController extends Controller
      *
      * @Route("/{id}", name="besoin_archive")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER') and besoin.isOwner(user)")
+     * @Security("has_role('ROLE_USER') and besoin.isOwner(user) or has_role('ROLE_ADMIN')")
      * 
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -151,11 +151,11 @@ class GestionController extends Controller
             $em->flush();
         }
         
-        if($besoin->isOwner($this->getUser())){
-            return $this->redirectToRoute('besoins_ia');
+        if($this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('gestion_index');
         }
         
-        return $this->redirectToRoute('gestion_index');
+        return $this->redirectToRoute('besoins_ia');
     }
 
 
