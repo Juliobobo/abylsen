@@ -119,8 +119,11 @@ class GestionController extends Controller
             
             $em->persist($besoin);
             $em->flush();
-
-            return $this->redirectToRoute('gestion_index', array('id' => $besoin->getId()));
+            
+            if($this->isGranted('ROLE_ADMIN')){
+                return $this->redirectToRoute('gestion_index', array('id' => $besoin->getId()));
+            }
+            return $this->redirectToRoute('besoins_ia', array('id' => $besoin->getId()));
         }
 
         return $this->render('EasygestionBundle:gestion:new.html.twig', array(

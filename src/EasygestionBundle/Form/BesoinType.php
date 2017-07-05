@@ -36,18 +36,18 @@ class BesoinType extends AbstractType
                         'class' => 'EasygestionBundle:Client',
                         'choice_label' => 'name',
                 ))
-                ->add('ia', EntityType::class, array(
+                ->add('createdBy', EntityType::class, array(
                         'placeholder' => 'Ia ?',
                         'class' => 'EasygestionBundle:Ia',
                         'choice_label' => 'initials',
                 ))
                 ->add('start', DateType::class, array(
                         'placeholder' => array(
-                            'year' => 'Année',
-                            'month' => 'Mois',
                             'day' => 'Jour',
+                            'month' => 'Mois',
+                            'year' => 'Année',    
                         ),
-                        'format' => 'yyyy-MM-dd',
+                        'format' => 'dd-MM-yyyy',
                 ))
                 ->add('duration', ChoiceType::class, array(
                         'placeholder' => 'Mois',
