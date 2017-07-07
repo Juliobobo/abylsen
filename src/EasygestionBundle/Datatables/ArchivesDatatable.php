@@ -27,7 +27,7 @@ use Sg\DatatablesBundle\Datatable\Filter\SelectFilter;
  *
  * @package EasygestionBundle\Datatables
  */
-class BesoinsDatatable extends AbstractDatatable
+class ArchivesDatatable extends AbstractDatatable
 {
     /**
      * {@inheritdoc}
@@ -94,21 +94,6 @@ class BesoinsDatatable extends AbstractDatatable
                   //  return !$this->authorizationChecker->isGranted('ROLE_USER');
                 //},
             ))
-            ->add('priority', Column::class, array(
-                'title' => 'Priorité',
-                'filter' => array(NumberFilter::class, array(
-                    'search_type' =>'eq',
-                    'type' =>'number',
-                    'min' => '1',
-                    'max' => '3',
-                    'initial_search' => '1',
-                )),
-                'editable' => array(TextEditable::class,
-                    array(
-                        'placeholder' => '1, 2 ou 3 ?',
-                    ),  
-                ),
-            ))
             ->add('client.name', Column::class, array(
                 'title' => 'Client',
                 'searchable' => false,
@@ -156,7 +141,7 @@ class BesoinsDatatable extends AbstractDatatable
                     )
                 ),
             ))
-            /*->add('archive', Column::class, array(
+            ->add('archive', Column::class, array(
                 'title' => 'Archive',
                 'filter' => array(NumberFilter::class, array(
                     'search_type' =>'eq',
@@ -166,43 +151,8 @@ class BesoinsDatatable extends AbstractDatatable
                     'initial_search' => '0',
                     'show_label' => true,
                 )),
-            ))*/
-            ->add(null, ActionColumn::class, array(
-                'title' => $this->translator->trans('sg.datatables.actions.title'),
-                'actions' => array(
-                    array(
-                      'route' => 'besoin_archive',
-                        'route_parameters' => array(
-                            'id' => 'id',
-                        ),
-                        'icon' => 'glyphicon glyphicon-folder-close',
-                        'attributes' => array(
-                            'rel' => 'tooltip',
-                            'class' => 'btn btn-primary btn-xs',
-                            'role' => 'button',
-                        ),
-                        /*'render_if' => function ($row) {
-                            if($row['archive'] == 1){
-                                return false;
-                            }
-                            
-                            return true;
-                        },*/
-                    ),
-                    array(
-                      'route' => 'besoin_show',
-                        'route_parameters' => array(
-                            'id' => 'id',
-                        ),
-                        'icon' => 'glyphicon glyphicon-edit',
-                        'attributes' => array(
-                            'rel' => 'tooltip',
-                            'class' => 'btn btn-primary btn-xs',
-                            'role' => 'button',
-                        ),
-                    ),
-                )
-            ));
+            )); 
+            
     }
 
     /**
@@ -218,6 +168,6 @@ class BesoinsDatatable extends AbstractDatatable
      */
     public function getName()
     {
-        return 'besoin_datatable';
+        return 'archive_datatable';
     }
 }

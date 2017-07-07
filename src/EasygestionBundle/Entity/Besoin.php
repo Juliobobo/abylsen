@@ -74,6 +74,20 @@ class Besoin
     private $solution;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="work_type", type="string", length=255, nullable=true)
+     */
+    private $workType;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="archive", type="integer")
@@ -364,5 +378,53 @@ class Besoin
     public function getSolution()
     {
         return $this->solution;
+    }
+
+    /**
+     * Set workType
+     *
+     * @param string $workType
+     *
+     * @return Besoin
+     */
+    public function setWorkType($workType)
+    {
+        $this->workType = $workType;
+
+        return $this;
+    }
+
+    /**
+     * Get workType
+     *
+     * @return string
+     */
+    public function getWorkType()
+    {
+        return $this->workType;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Besoin
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

@@ -86,7 +86,7 @@ class ClientController extends Controller
                                     'msg' => $msg,
                                 ));
     }
-    
+
     public function removeAction($id){
         
         $em = $this->getDoctrine()->getManager();

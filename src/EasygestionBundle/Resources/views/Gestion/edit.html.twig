@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div>
+        <a href="{{ path('homepage') }}">Retour</a>
+    </div>
+    
+    <h2>{{ besoin.createdBy.initials }} - Edition du besoin {{ besoin.id }}</h2>
+    <hr>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Edit" class="btn btn-primary" />
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,5 +1,8 @@
 {% extends "::base.html.twig" %}
 
 {% block fos_user_content %}
+    <div>
+        <a href="{{ path('besoins_ia') }}">Retour</a>
+    </div>
     {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}
