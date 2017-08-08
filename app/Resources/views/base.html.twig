@@ -37,9 +37,28 @@
     <body>
     {% block header %}
         <header>
-           <div class="navbar navbar-default">
+           <div class="navbar navbar-default navbar-static-top">
                 <div class="container">
-                    <a href="{{ path('homepage') }}" class="navbar-brand">ABYLSEN</a>
+                    <div class="navbar-header">
+                        <a href="{{ path('homepage') }}" class="navbar-brand">ABYLSEN</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if app.user %}
+                                <li>
+                                    <a href="{{ path('fos_user_security_logout') }}">
+                                        <i class="glyphicon glyphicon-log-out"></i> Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('homepage') }}">
+                                        <i class="glyphicon glyphicon-log-in"></i> Se connecter
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
@@ -47,7 +66,7 @@
 
     <div class="container body-container">
         {% block body %}
-            <div class="row">
+            {#<div class="row">
                 <div id="main" class="col-sm-9">
                     {% block main %}{% endblock %}
                     <div id="ajax_content"></div>
@@ -59,7 +78,7 @@
                     {% block sidebar %}
                     {% endblock %}
                 </div>
-            </div>
+            </div>#}
         {% endblock %}
     </div>
 

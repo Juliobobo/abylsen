@@ -1,56 +1,83 @@
-{% extends "::layout/layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block body %}
-   
-   
-   <div class="row">
-       <div class="col-md-offset-2">
-           
-            <div class="col-md-4">
-                <a href="#" data-toggle="modal" data-target="#login-modal">
-                    <div class="link">
-                        <img src="{{ asset('img/logo.jpeg') }}" width="160px">
-                        <div class="clear"></div><span>Directeur</span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ path('gestion_index') }}">
-                    <div class="link" id="parents">
-                        <img src="{{ asset('img/logo.jpeg') }}" width="160px">
-                        <div class="clear"></div><span>Julien</span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ path('besoins_ia') }}" id="students">
-                    <div class="link teachers">
-                        <img src="{{ asset('img/logo.jpeg') }}" width="160px">
-                        <div class="clear"></div><span>Ingénieur d'affaires</span>
-                    </div>
-                </a>
-            </div>
-       </div>    
-    </div>
-                    
     
-    {# Formulaire de Login #}
-    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" 
-        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="loginmodal-container">
-                    <h1>Se connecter</h1><br>
-              <form>
-                    <input type="text" name="user" placeholder="Pseudo">
-                    <input type="password" name="pass" placeholder="Password">
-                    <input type="submit" name="login" class="login loginmodal-submit" value="Connexion">
-              </form>
+    <div class="main">   
 
-              <div class="login-help">
-                    <a href="#">Register</a> - <a href="#">Forgot Password</a>
-              </div>
+        <div class="clear"></div> <br>
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="login"> 
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <h1> Bonjour {{ app.user }} </h1>
+                {% else %}
+                    <h1> Login </h1>
+                {% endif %}
+                <div class="clear"></div>
+                
+                <div id="login_form">
+                    {{ render(controller('FOSUserBundle:Security:login')) }}
+                </div>
             </div>
         </div>
-    </div>
-{% endblock %}
+                
+        <div class="clear"></div> <br><br>
 
+        <div class="col-md-8 col-md-offset-2">
+            <div id="action">
+                <div class="col-md-4">
+                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED")%}
+                   <a href="#">  
+                   {% else %}
+                   <a href="#" id="directeur">
+                   {% endif %}
+                       <div class="link">
+                           <img src="{{ asset('img/logo.jpeg') }}" width="160px">
+                           <div class="clear"></div><span>Directeur</span>
+                       </div>
+                   </a>
+                </div>
+                <div class="col-md-4">
+                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                       {% if is_granted("ROLE_ADMIN") %}
+                           <a href="{{ path('gestion_index') }}">     
+                       {% else %}
+                           <h1> Not Admin </h1>
+                       {% endif %}   
+                   {% else %}
+                   <a href="#" id="reunion">
+                   {% endif %}
+                       <div class="link">
+                                <img src="{{ asset('img/logo.jpeg') }}" width="160px">
+                                <div class="clear"></div><span>Réunion business</span>
+                       </div>
+                   </a>
+                </div>
+                <div class="col-md-4">
+                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                   <a href="{{ path('besoins_ia') }}">                 
+                   {% else %}
+                   <a href="#" id="ia">
+                   {% endif %}
+                       <div class="link">
+                            <img src="{{ asset('img/logo.jpeg') }}" width="160px">
+                            <div class="clear"></div><span>Ingénieur d'affaires</span>
+                       </div>
+                    </a>
+                </div>
+           </div>
+        </div>                       
+    </div>
+                        
+{# Script slide #}    
+<script type="text/javascript">
+    $(document).ready(function(){
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            $("#login_form").slideToggle();
+            $("#login_form").css("display" , "none");
+            $("#action").css("display" , "block");
+        {% endif %} 
+    });
+</script>
+    
+{% endblock %}

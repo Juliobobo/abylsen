@@ -4,6 +4,7 @@ namespace EasygestionBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class HomeController
@@ -21,5 +22,10 @@ class HomeController extends Controller
      public function indexAction()
     {
         return $this->render('EasygestionBundle:Home:home.html.twig');
+    }
+    
+    public function getParent()
+    {
+        return 'FOSUserBundle';
     }
 }
