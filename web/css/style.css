@@ -20,7 +20,7 @@ body {
 /*--- Header ---*/
 .nav_right {
     float: right;
-    margin-top: 10px;  
+    margin-top: 6px;  
 }
 
 .nav_right button.dropdown-toggle {
