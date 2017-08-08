@@ -4,7 +4,10 @@
     
     {# Retour #}
     <div>
-        <a href="{{ path('homepage') }}">Retour</a>
+        <div class="navigation">
+            <a href="{{ path('home_ia') }}" class="glyphicon glyphicon-menu-left">
+            </a>
+        </div>
         <h2>{{ app.user.initials | upper }}</h2>
     </div>
     
