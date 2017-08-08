@@ -3,26 +3,33 @@
 namespace EasygestionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Ia controller.
+ *
+ * @Route("ia")
+ *
+ * @package EasygestionBundle\Controller
+ */
 class IaController extends Controller
 {
-    public function accueilAction()
+    /**
+     * @Route("/", name="home_ia")
+     * @Security("has_role('ROLE_USER')")
+     * @Method("GET")
+     * 
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function homeAction()
     {
-        return $this->render('EasygestionBundle:Ia:accueil.html.twig');
+        return $this->render('EasygestionBundle:Ia:home_ia.html.twig');
     }
     
-    public function mesbesoinsAction()
-    {
-        return $this->render('EasygestionBundle:Ia:mesbesoins.html.twig');
-    }
     
-    public function teamAction()
-    {
-        return $this->render('EasygestionBundle:Ia:team.html.twig');
-    }
     
-    public function projectsAction()
-    {
-        return $this->render('EasygestionBundle:Ia:projects.html.twig');
-    }
 }

@@ -8,10 +8,40 @@ and open the template in the editor.
     Author     : julien.bonnardel
 */
 
+/*--- Page ---*/
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 
-/***** Home page ******/
+body {
+    background-color: #C7D3D9;
+    color: #2b2b2b;
+    font-family:'JF Flat Regular',Arial,Tahoma,Sans-serif;
+}
 
+/*--- Header ---*/
+.nav_right {
+    float: right;
+    margin-top: 10px;  
+}
+
+.nav_right button.dropdown-toggle {
+    font-family:'JF Flat Regular',Arial,Tahoma,Sans-serif;
+}
+
+/*--- Footer ---*/
+footer {
+    clear: both;
+    margin-top: 80px;
+    width: 100%;
+    color: #35383f;
+    text-align: center;
+    padding: 8px;    
+    background-color: #f8f8f8;
+    border-top: 1px solid #c4c4c4;
+    border-bottom: 1px solid #c4c4c4;
+    direction: ltr;
+}
+
+/*--- Home page ---*/
 .clear {
     clear: both;
 }
@@ -59,6 +89,10 @@ and open the template in the editor.
 
 
 /*--- Login ---*/
+header {
+    text-align: center;
+    margin: 40px 20px;
+}
 #login_form {
     display: block;
 }
@@ -131,6 +165,14 @@ and open the template in the editor.
 .login input[type="button"]:hover{
     background: #c7d3d9;
 }
+
+
+/*--- Home Ia ---*/
+
+
+
+
+
 
 /***** Glyph ******/
 
