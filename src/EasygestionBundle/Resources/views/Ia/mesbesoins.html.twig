@@ -5,7 +5,8 @@
     {# Retour #}
     <div>
         <div class="navigation">
-            <a href="{{ path('home_ia') }}" class="glyphicon glyphicon-menu-left">
+            <a href="{{ path('homepage') }}" style="margin-left:20px;" 
+                class="glyphicon glyphicon-arrow-left">
             </a>
         </div>
         <h2>{{ app.user.initials | upper }}</h2>
@@ -42,7 +43,7 @@
 
             <br />
 
-            <div>
+            <div class="table-custom">
                 {{ sg_datatables_render(datatable) }}
             </div>  
 
@@ -144,6 +145,13 @@
             $(this).tab('show');
         });
     });
+</script>
+
+{# Script#}    
+<script type="text/javascript">
+
+       alert(this.getElementsByTagName('td')[3].innerHTML);
+
 </script>
 {% endblock %}
 

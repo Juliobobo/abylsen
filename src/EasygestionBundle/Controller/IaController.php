@@ -107,4 +107,58 @@ class IaController extends Controller
             'archive' => $archive,
         ));
     }
+    
+    /**
+     * Get all client from Database to show in Select2-Filter.
+     *
+     * @param Request $request
+     *
+     * @Route("/clients", name="select2_clients")
+     *
+     * @return JsonResponse|Response
+     */
+    public function select2Clients(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
+
+            $result = array();
+
+            foreach ($clients as $client) {
+                $result[$client->getId()] = $client->getName();
+            }
+
+            return new JsonResponse($result);
+        }
+
+        return new Response('Bad request.', 400);
+    }
+    
+    /**
+     * Get all client from Database to show in Select2-Filter.
+     *
+     * @param Request $request
+     *
+     * @Route("/ias", name="select2_ias")
+     *
+     * @return JsonResponse|Response
+     */
+    public function select2Ia(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $Ias = $em->getRepository('EasygestionBundle:Ia')->findAll();
+
+            $result = array();
+
+            foreach ($Ias as $Ia) {
+                $result[$Ia->getId()] = $Ia->getInitials();
+            }
+
+            return new JsonResponse($result);
+        }
+
+        return new Response('Bad request.', 400);
+    }
 }

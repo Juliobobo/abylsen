@@ -42,7 +42,7 @@ class BesoinsDatatable extends AbstractDatatable
         ));
 
         $this->options->set(array(
-            'classes' => Style::BOOTSTRAP_3_STYLE,
+            'classes' => STYLE::BOOTSTRAP_4_STYLE,
             //'order' => array(array($this->getDefaultOrderCol(), 'asc')),
             'order_cells_top' => true,
             'individual_filtering' => true,
@@ -61,21 +61,26 @@ class BesoinsDatatable extends AbstractDatatable
             ),
         )); */
         
-        $this->columnBuilder 
+        $this->columnBuilder
             ->add('status', Column::class, array(
                 'title' => 'Status',
-                'filter' => array(NumberFilter::class, array(
-                    'search_type' =>'eq',
-                    'type' =>'number',
-                    'min' => '0',
-                    'max' => '1',
-                    'initial_search' => '1',
+                'class_name' => 'translate-img',
+                'filter' => array(SelectFilter::class, array(
+                    'classes' => 'test1 test2',
+                    'search_type' => 'eq',
+                    'select_options' => array(
+                        '' => 'Tout',
+                        '0' => 'Out',
+                        '1' => 'Actif',
+                        '2' => 'Ok',
+                    ),
                 )),
                 'editable' => array(SelectEditable::class,
                     array(
                         'source' => array(
-                            array('value' => 1, 'text' => 'ok'),
-                            array('value' => 0, 'text' => 'out'),
+                            array('value' => 2, 'text' => 'Ok'),
+                            array('value' => 1, 'text' => 'Actif'),
+                            array('value' => 0, 'text' => 'Out'),
                         ),
                         'mode' => 'popup',
                         'empty_text' => '',
@@ -96,6 +101,8 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('priority', Column::class, array(
                 'title' => 'Priorité',
+                //'width' => '100%',
+                'searchable' => true,
                 'filter' => array(NumberFilter::class, array(
                     'search_type' =>'eq',
                     'type' =>'number',
@@ -111,11 +118,17 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('client.name', Column::class, array(
                 'title' => 'Client',
-                'searchable' => false,
+                //'width' => '20%',
+                'filter' => array(Select2Filter::class, array(
+                    //'select_options' => array('' => 'All') + $this->getOptionsArrayFromEntities($users, 'username', 'username'),
+                    'search_type' => 'eq',
+                    'url' => 'select2_clients',
+                )),
             ))
             ->add('workType', Column::class, array(
                 'title' => 'Métier',
-                'searchable' => false,
+                'width' => '60%',
+                //'searchable' => false,
                 'editable' => array(TextEditable::class,
                     array(
                         'placeholder' => 'Métier ?',
@@ -124,17 +137,19 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('description', Column::class, array(
                 'title' => 'Description',
-                'searchable' => false,
+                //'width' => '50%',
+                //'searchable' => false,
                 'editable' => array(TextareaEditable::class,
                     array(
-                        'rows' => 5,
+                        'rows' => 2,
                     ),  
                 ),
             ))
             ->add('start', DateTimeColumn::class, array(
                 'title' => 'Start',
+                'width' => '60%',
                 'date_format' => 'L',
-                'searchable' => false,
+                //'searchable' => false,
                 'editable' => array(CombodateEditable::class, array(
                     'format' => 'YYYY.MM.DD',
                     'view_format' => 'DD.MM.YYYY',
@@ -142,14 +157,16 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('duration', Column::class, array(
                 'title' => 'Durée',
-                'searchable' => false,
+                'width' => '75%',
+                //'searchable' => false,
                 'editable' => array(TextEditable::class, array(
                     'placeholder' => 'Combien de mois ?'
                 )),
             ))
             ->add('solution', Column::class, array(
                 'title' => 'Solution',
-                'searchable' => false,
+                //'width' => '100%',
+                //'searchable' => false,
                 'editable' => array(TextareaEditable::class,
                     array(
                         'rows' => 6,
