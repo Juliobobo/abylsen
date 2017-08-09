@@ -103,12 +103,15 @@ class BesoinsDatatable extends AbstractDatatable
                 'title' => 'Priorité',
                 //'width' => '100%',
                 'searchable' => true,
-                'filter' => array(NumberFilter::class, array(
+                'filter' => array(SelectFilter::class, array(
                     'search_type' =>'eq',
-                    'type' =>'number',
-                    'min' => '1',
-                    'max' => '3',
                     'initial_search' => '1',
+                    'select_options' => array(
+                        '' => 'Tout',
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3',        
+                    ),
                 )),
                 'editable' => array(TextEditable::class,
                     array(
@@ -127,11 +130,12 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('workType', Column::class, array(
                 'title' => 'Métier',
-                'width' => '60%',
+                'width' => '65%',
                 //'searchable' => false,
                 'editable' => array(TextEditable::class,
                     array(
                         'placeholder' => 'Métier ?',
+                        'empty_text' => 'Vide',
                     ),  
                 ),
             ))
@@ -142,6 +146,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'editable' => array(TextareaEditable::class,
                     array(
                         'rows' => 2,
+                        'empty_text' => 'Vide',
                     ),  
                 ),
             ))
@@ -170,6 +175,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'editable' => array(TextareaEditable::class,
                     array(
                         'rows' => 6,
+                        'empty_text' => 'Vide',
                     )
                 ),
             ))
@@ -188,7 +194,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(
                     array(
-                      'route' => 'besoin_archive',
+                      'route' => 'besoin_archivage',
                         'route_parameters' => array(
                             'id' => 'id',
                         ),
@@ -214,7 +220,7 @@ class BesoinsDatatable extends AbstractDatatable
                         'icon' => 'glyphicon glyphicon-edit',
                         'attributes' => array(
                             'rel' => 'tooltip',
-                            'class' => 'btn btn-primary btn-xs',
+                            'class' => 'btn btn-primary btn-xs btn-custom',
                             'role' => 'button',
                         ),
                     ),

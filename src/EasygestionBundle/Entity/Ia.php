@@ -89,7 +89,7 @@ class Ia extends BaseUser
      *
      * @return $this
      */
-    public function removePost(Besoin $besoin)
+    public function removeBesoin(Besoin $besoin)
     {
         $this->besoins->removeElement($besoin);
 

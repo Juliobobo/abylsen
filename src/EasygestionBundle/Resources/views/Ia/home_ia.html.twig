@@ -2,10 +2,20 @@
 
 {% block body %}
     
-    <div class="navigation">
-        <a href="{{ path('homepage') }}" style="margin-left:20px;" 
-           class="glyphicon glyphicon-arrow-left">
-        </a>
+    <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-left: 10px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('mes_besoins') }}">Mes besoins</a></li>
+            <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
+            <li><a href="{{ path('clients') }}">Clients</a></li>
+            <li><a href="#">Business Plan</a></li>
+            <li><a href="#}">Mon profil</a></li>
+        </ul>
     </div>
     
     <div class="main" style="margin-top: 20px;">
@@ -21,7 +31,7 @@
             </div>
             
             <div class="col-md-3">
-                <a href="#">
+                <a href="{{ path('besoins_archives') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="80px">
                         <div class="clear"></div><span>Besoins archivés</span>
@@ -30,7 +40,7 @@
             </div>
                         
             <div class="col-md-3">
-                <a href="#">
+                <a href="{{ path('clients') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="80px">
                         <div class="clear"></div><span>Les clients</span>

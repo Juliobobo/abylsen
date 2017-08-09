@@ -23,6 +23,7 @@ class BesoinType extends AbstractType
                     'choices' => array(
                         'Out' => '0',
                         'Actif' => '1',
+                        'Ok' => '2',
                     ),
                     'label' => 'Statut',
                 ))
@@ -62,7 +63,7 @@ class BesoinType extends AbstractType
                 ))
                 ->add('duration', ChoiceType::class, array(
                         'placeholder' => 'Mois',
-                        'choices' => range(0, 12),
+                        'choices' => range(0, 100),
                         'label' => 'Durée',
                 ))
                 ->add('solution', TextareaType::class);

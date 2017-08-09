@@ -102,38 +102,8 @@ class GestionController extends Controller
             return $responseService->getResponse();
         }
         
-        //Clients
-        $em = $this->getDoctrine()->getManager();
-        $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
-       
-        $archive = $em->getRepository('EasygestionBundle:Besoin')->findBy(array(
-            'archive' => 1,
-        ));
-        
-        if(null === $clients){
-            throw new NotFoundHttpException("Client doesn't exist");
-        }   
-
-        $client = new Client();
-        
-        $form = $this->createForm(ClientType::class, $client);
-        
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            
-            $em->persist($client);
-            $em->flush();
-            
-            return $this->redirectToRoute('besoins_ia');
-        }
-        
         return $this->render('EasygestionBundle:ia:mesbesoins.html.twig', array(
             'datatable' => $datatable,
-            'clients' => $clients,
-            'form' => $form->createView(),
-            'archive' => $archive,
         ));
     }
     
@@ -179,7 +149,7 @@ class GestionController extends Controller
      * @param $id
      * @param $besoin
      *
-     * @Route("/arch/{id}", name="besoin_archive")
+     * /**@Route("/arch/{id}", name="besoin_archive")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER') and besoin.isOwner(user) or has_role('ROLE_ADMIN')")
      * 

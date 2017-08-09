@@ -28,7 +28,7 @@ body {
 }
 
 /*--- Footer ---*/
-footer {
+#footer {
     clear: both;
     margin-top: 80px;
     width: 100%;
@@ -216,12 +216,29 @@ header {
     border-color: grey;
 }
 
+.editable-pre-wrapped {
+    white-space: pre-line;
+}
 
+.editable-click, 
+a.editable-click, 
+a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: dashed 1px red;
+}
 
+.btn-custom {
+    float: right;
+}
 
+/*--- Archives ---*/
+.see {
+    margin-left: 10px;
+}
 
-
-
+.space-pre-wrapped {
+    white-space: pre-line;
+}
 
 /***** Glyph ******/
 

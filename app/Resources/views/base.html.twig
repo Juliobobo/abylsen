@@ -99,6 +99,7 @@
             </div>
         </div>             
     </header>
+                     
     <div class="clear"></div>
     
 {% endblock %}
@@ -121,13 +122,12 @@
         {% endblock %}
     </div>
 
-
-    {% block footer %}
-        <footer>
-            Copyright &copy; ABYLSEN STRA | EasyGestion - Julien Bonnardel  
-        </footer>
-    {% endblock %}
-
+    <div id="footer">
+        {% block footer %}
+                Copyright &copy; ABYLSEN STRA | EasyGestion - Julien Bonnardel  
+        {% endblock %}
+    </div>
+    
     </body>
 </html>
 
