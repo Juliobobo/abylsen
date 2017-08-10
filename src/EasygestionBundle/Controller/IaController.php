@@ -298,12 +298,13 @@ class IaController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
     /**
      * Creates a new Besoin.
      *
      * @param Request $request
      *
-     * @Route("/new", name="besoin_new")
+     * @Route("/newbesoin", name="besoin_new")
      * @Method({"GET", "POST"})
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response

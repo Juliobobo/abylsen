@@ -427,4 +427,14 @@ class Besoin
     {
         return $this->description;
     }
+    
+    /**
+     * Get date de fin de commande
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->start->modify('+'.$this->duration.'day');
+    }
 }

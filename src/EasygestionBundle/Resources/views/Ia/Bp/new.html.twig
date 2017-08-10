@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h2>Nouveau consultant</h2>
+    
+    <div class="clear"></div> <br>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Créer" class="btn btn-primary" />
+    {{ form_end(form) }}
+
+    <hr>
+    <a href="{{ path('home_bp') }}" class="btn btn-primary">Revenir à la liste</a>
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    
+    <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('home_ia') }}">Home Ia</a></li>
+            <li><a href="{{ path('mes_besoins') }}">Mes besoins</a></li>
+            <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
+            <li><a href="{{ path('clients') }}">Clients</a></li>
+            <li><a href="#}">Mon profil</a></li>
+        </ul>
+    </div>
+            
+    <div class="clear"></div> 
+    
+    <div>
+        <h2>Business plan</h2>
+        <a href="{{ path('consultant_new') }}" class="btn btn-success">Nouveau consultant</a>
+        <a href="{{ path('consultant_infos_new') }}" class="btn btn-success">Nouvelle fiche</a>
+    </div>
+
+    <div class="clear"></div> <br>
+    
+    <div>
+        <!--dropdown menu-->
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown Example
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>New Entry</a></li>
+                <li role="seperator" class="divider"></li>
+                <li><a href="#">category 1</a></li>
+                <li><a href="#">category 2</a></li>
+            </ul>
+        </div>
+        
+        <br><br>
+      
+         {{ dump(infos) }}
+        <table class="table table-custom">
+        <thead>
+            <tr class="info">
+                <th>Date d'embauche</th>
+                <th>Contrat</th>
+                <th>Date démarrage</th>
+                <th>Date fin de commande</th>
+                <th>Date prévisionnelle</th>
+                <th>Client</th>
+                <th>Type</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>TJM</th>
+                <th>Jours facturés</th>
+                <th>IP</th>
+                <th>CA</th>
+                <th>Salaire</th>
+                <th>Frais jours</th>
+                <th>Marge</th>
+                <th>% Marge</th>
+                <th>Valeur</th> 
+            </tr>
+        </thead>
+        <tbody>
+           {% for i in infos %}
+                <tr>
+                    <td>{{ i.consultant.dateEmbauche |date('d-m-y') }}</td>
+                    <td>{{ i.consultant.contrat }}</td>
+                    <td>{{ i.besoin.start |date('d-m-y') }}</td>
+                    <td>{{ i.besoin.getDateFin() |date('d-m-y')}}</td>
+                    <td>{{ i.datePrevisionnelle |date('d-m-y')}}</td>
+                    <td>{{ i.besoin.client.name }}</td>
+                    <td>{{ i.consultant.type }}</td>
+                    <td>{{ i.consultant.nom }}</td>
+                    <td>{{ i.consultant.prenom }}</td>
+                    <td>{{ i.tjm }}</td>
+                    <td>{{ i.nbFact }}</td>
+                    <td>{{ i.inter }}</td>
+                    <td>{{ i.getCa() }}</td>
+                    <td>{{ i.salaire }}</td>
+                    <td>{{ i.fraisJour }}</td>
+                    <td>{{ i.getMarge() }}%</td>
+                    <td>{{ i.getPmarge() }}%</td>
+                    <td>{{ i.valeur }}</td>
+                    {#<td>
+                        <a href="{{ path('client_remove', {'id': c.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
+                    </td>#}
+                </tr>
+            {% endfor %}
+            <tr>
+        <!--first example-->
+            <td>07/28/2016</td>
+            <td>Expenses</td>
+            <td>LLC</td>
+            <td>129756</td>
+            <td class="danger">Not Approved</td>
+            <td>$129.90</td>
+        </tr>
+        <tr>
+        <!--second example-->
+            <td>07/24/2016</td>
+            <td>Travel</td>
+            <td>Co.</td>
+            <td>143453</td>
+            <td class="success">Approved</td>
+            <td>$85.00</td>
+        </tr>
+        <tr>
+        <!--third example-->
+            <td>07/22/2016</td>
+            <td>Contracts</td>
+            <td>LLC</td>
+            <td>122223</td>
+            <td class="warning">Pending</td>
+            <td>$125.55</td>
+        </tr>
+        </tbody>
+    </table>
+        <!--table-->
+       <table class="table table-striped">
+       <thead>
+            <tr class="info">
+                <th>Date</th>
+                <th>Category</th>
+                <th>Vendor</th>
+                <th>Report Number</th>
+                <th>Apporval Status</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+        <!--first example-->
+            <td>07/28/2016</td>
+            <td>Expenses</td>
+            <td>LLC</td>
+            <td>129756</td>
+            <td class="danger">Not Approved</td>
+            <td>$129.90</td>
+        </tr>
+        <tr>
+        <!--second example-->
+            <td>07/24/2016</td>
+            <td>Travel</td>
+            <td>Co.</td>
+            <td>143453</td>
+            <td class="success">Approved</td>
+            <td>$85.00</td>
+        </tr>
+        <tr>
+        <!--third example-->
+            <td>07/22/2016</td>
+            <td>Contracts</td>
+            <td>LLC</td>
+            <td>122223</td>
+            <td class="warning">Pending</td>
+            <td>$125.55</td>
+        </tr>
+        </tbody>
+    </table>
+       
+    </div>
+  
+{% endblock %}
+

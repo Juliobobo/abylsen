@@ -1,6 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
+    {# Retour #}
+    <div>
+        <div class="navigation btn-group">
+            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                class="glyphicon glyphicon-arrow-left">
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('homepage') }}">Home</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ path('home_ia') }}">Home Ia</a></li>
+                <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
+                <li><a href="#">Clients</a></li>
+                <li><a href="#">Business Plan</a></li>
+                <li><a href="#}">Mon profil</a></li>
+            </ul>
+        </div>
+    
+    <div class="clear"></div> <hr>
+    
     <h2>Nouveau besoin</h2>
     <hr>
 
@@ -10,5 +30,6 @@
     {{ form_end(form) }}
 
     <hr>
-    <a href="{{ path('gestion_index') }}" class="btn btn-primary">Revenir à la liste</a>
+    
+    <a href="{{ path('mes_besoins') }}" class="btn btn-primary">Revenir à la liste</a>
 {% endblock %}

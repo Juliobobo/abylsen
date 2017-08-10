@@ -240,6 +240,13 @@ a.editable-click:hover {
     white-space: pre-line;
 }
 
+/*--- BP ---*/
+.table-custom {
+    background-color: #fff;
+    margin-left: -35px;
+}
+
+
 /***** Glyph ******/
 
 /****** LOGIN MODAL ******/
