@@ -243,7 +243,29 @@ a.editable-click:hover {
 /*--- BP ---*/
 .table-custom {
     background-color: #fff;
-    margin-left: -35px;
+    margin-left: -60px;
+}
+
+.yellow {
+    background-color: #F8FE45;
+    font-weight: bold;
+}
+
+.success-custom {
+    background-color: #14C101;
+    font-weight: bold;
+}
+
+.danger-custom {
+    background-color: #C10101;
+    font-weight: bold ;
+}
+
+.table-bord {
+    width: 18%;
+    display:inline-block;
+    margin-right: 78px;
+    vertical-align:top;
 }
 
 

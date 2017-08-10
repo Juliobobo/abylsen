@@ -20,10 +20,26 @@
             
     <div class="clear"></div> 
     
+    {% set var = [] %}
+    {% set count = 0 %}
+    {% for i in infos %}
+        {{ var['count'] }}
+        {{ var['count + 1'] }}
+        {% if var['count'] = var['count + 1'] %}
+            {%else%}
+            {% var['count'] = i.mois %}
+        {% endif %}
+        {% set count = count + 1 %}
+        
+        
+    {% endfor %}
+    
+    
     <div>
-        <h2>Business plan</h2>
+        <h2>Business plan - {{ "now"|date("Y") }}</h2>
         <a href="{{ path('consultant_new') }}" class="btn btn-success">Nouveau consultant</a>
         <a href="{{ path('consultant_infos_new') }}" class="btn btn-success">Nouvelle fiche</a>
+        <a href="#" data-toggle="modal" data-target="#add-frais" class="btn btn-success">Frais Managers</a>
     </div>
 
     <div class="clear"></div> <br>
@@ -31,142 +47,276 @@
     <div>
         <!--dropdown menu-->
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown Example
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Mois
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>New Entry</a></li>
-                <li role="seperator" class="divider"></li>
+                {% for i in infos %}
+                    <li><a href="#">{{ i.mois }}</a></li>
+                {% endfor %}
                 <li><a href="#">category 1</a></li>
                 <li><a href="#">category 2</a></li>
             </ul>
         </div>
         
         <br><br>
-      
-         {{ dump(infos) }}
-        <table class="table table-custom">
-        <thead>
-            <tr class="info">
-                <th>Date d'embauche</th>
-                <th>Contrat</th>
-                <th>Date démarrage</th>
-                <th>Date fin de commande</th>
-                <th>Date prévisionnelle</th>
-                <th>Client</th>
-                <th>Type</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>TJM</th>
-                <th>Jours facturés</th>
-                <th>IP</th>
-                <th>CA</th>
-                <th>Salaire</th>
-                <th>Frais jours</th>
-                <th>Marge</th>
-                <th>% Marge</th>
-                <th>Valeur</th> 
-            </tr>
-        </thead>
-        <tbody>
-           {% for i in infos %}
+        
+        <table class="table table-custom table-bord">
+            <tbody>
                 <tr>
-                    <td>{{ i.consultant.dateEmbauche |date('d-m-y') }}</td>
-                    <td>{{ i.consultant.contrat }}</td>
-                    <td>{{ i.besoin.start |date('d-m-y') }}</td>
-                    <td>{{ i.besoin.getDateFin() |date('d-m-y')}}</td>
-                    <td>{{ i.datePrevisionnelle |date('d-m-y')}}</td>
-                    <td>{{ i.besoin.client.name }}</td>
-                    <td>{{ i.consultant.type }}</td>
-                    <td>{{ i.consultant.nom }}</td>
-                    <td>{{ i.consultant.prenom }}</td>
-                    <td>{{ i.tjm }}</td>
-                    <td>{{ i.nbFact }}</td>
-                    <td>{{ i.inter }}</td>
-                    <td>{{ i.getCa() }}</td>
-                    <td>{{ i.salaire }}</td>
-                    <td>{{ i.fraisJour }}</td>
-                    <td>{{ i.getMarge() }}%</td>
-                    <td>{{ i.getPmarge() }}%</td>
-                    <td>{{ i.valeur }}</td>
-                    {#<td>
-                        <a href="{{ path('client_remove', {'id': c.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
-                    </td>#}
+                    <th>Marge avec frais</th>
+                    <td class="yellow">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.getMarge() %}
+                        {% endfor %}
+                        {% set result = result - frais['0'].frais %}
+                        {{ result |number_format(0)}}
+                    </td>
                 </tr>
-            {% endfor %}
-            <tr>
-        <!--first example-->
-            <td>07/28/2016</td>
-            <td>Expenses</td>
-            <td>LLC</td>
-            <td>129756</td>
-            <td class="danger">Not Approved</td>
-            <td>$129.90</td>
-        </tr>
-        <tr>
-        <!--second example-->
-            <td>07/24/2016</td>
-            <td>Travel</td>
-            <td>Co.</td>
-            <td>143453</td>
-            <td class="success">Approved</td>
-            <td>$85.00</td>
-        </tr>
-        <tr>
-        <!--third example-->
-            <td>07/22/2016</td>
-            <td>Contracts</td>
-            <td>LLC</td>
-            <td>122223</td>
-            <td class="warning">Pending</td>
-            <td>$125.55</td>
-        </tr>
-        </tbody>
-    </table>
-        <!--table-->
-       <table class="table table-striped">
-       <thead>
-            <tr class="info">
-                <th>Date</th>
-                <th>Category</th>
-                <th>Vendor</th>
-                <th>Report Number</th>
-                <th>Apporval Status</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-        <!--first example-->
-            <td>07/28/2016</td>
-            <td>Expenses</td>
-            <td>LLC</td>
-            <td>129756</td>
-            <td class="danger">Not Approved</td>
-            <td>$129.90</td>
-        </tr>
-        <tr>
-        <!--second example-->
-            <td>07/24/2016</td>
-            <td>Travel</td>
-            <td>Co.</td>
-            <td>143453</td>
-            <td class="success">Approved</td>
-            <td>$85.00</td>
-        </tr>
-        <tr>
-        <!--third example-->
-            <td>07/22/2016</td>
-            <td>Contracts</td>
-            <td>LLC</td>
-            <td>122223</td>
-            <td class="warning">Pending</td>
-            <td>$125.55</td>
-        </tr>
-        </tbody>
-    </table>
-       
+                <tr>
+                    <th>Nombre de consultants</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.valeur %}
+                        {% endfor %}
+                        {{ result |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>% MC2</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% set count = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.getPmarge() %}
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        {{ result / count |number_format(1)}}%
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nombre d'affaires</th>
+                    <td class="success-custom"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+       <table class="table table-custom table-bord">
+            <tbody>
+                <tr>
+                    <th>Moyenne TJM</th>
+                    <td class="success-custom">{% set result = 0 %}
+                        {% set count = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.tjm %}
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        {{ result / count |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Salaire moyen</th>
+                    <td class="success-custom">{% set result = 0 %}
+                        {% set count = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.salaire %}
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        {{ result / count |number_format(1)}}</td>
+                </tr>
+                <tr>
+                    <th>Moyenne frais par jour</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% set count = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.fraisJour %}
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        {{ result / count |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>% d'inter</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.nbFact %}
+                        {% endfor %}
+                        {{ result |number_format(1)}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="table table-custom table-bord">
+            <tbody>
+                <tr>
+                    <th>Frais manager</th>
+                    <td class="success-custom">{{ frais['0'].frais |number_format(2)}}</td>
+                </tr>
+                <tr>
+                    <th>Encours réel</th>
+                    <td class="success-custom"></td>
+                </tr>
+                <tr>
+                    <th>Impact encours</th>
+                    <td class="success-custom"></td>
+                </tr>
+                <tr>
+                    <th>Impact refact frais &nbsp;</th>
+                    <td class="success-custom"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="table table-custom table-bord">
+            <tbody>
+                <tr>
+                    <th>Marge hors frais</th>
+                    <td class="yellow">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.getMarge() %}
+                        {% endfor %}
+                        {{ result |number_format(0)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Chiffre d'affaire total</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.getCa() %}
+                        {% endfor %}
+                        {{ result |number_format(0)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>% SSTT</th>
+                    <td class="success-custom"></td>
+                </tr>
+                <tr>
+                    <th>% Technicien</th>
+                    <td class="success-custom"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="table table-custom table-bord">
+            <tbody>
+                <tr>
+                    <th>Moy jours facturés</th>
+                    <td class="yellow">
+                        {% set result = 0 %}
+                        {% set count = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.nbFact %}
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        {{ result / count |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nb j facturés</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.nbFact %}
+                        {% endfor %}
+                        {{ result |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nb j inter</th>
+                    <td class="success-custom">
+                        {% set result = 0 %}
+                        {% for i in infos %}
+                            {% set result = result + i.inter %}
+                        {% endfor %}
+                        {{ result |number_format(1)}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Embauches / Départs</th>
+                    <td class="success-custom"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="table table-custom">
+            <thead>
+                <tr class="info">
+                    <th>Date d'embauche</th>
+                    <th>Contrat</th>
+                    <th>Date démarrage</th>
+                    <th>Date fin de commande</th>
+                    <th>Date prévisionnelle</th>
+                    <th>Client</th>
+                    <th>Type</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>TJM</th>
+                    <th>Jours facturés</th>
+                    <th>IP</th>
+                    <th>CA</th>
+                    <th>Salaire</th>
+                    <th>Frais jours</th>
+                    <th>Marge</th>
+                    <th>% Marge</th>
+                    <th>Valeur</th>
+                    <th>Action</th>  
+                </tr>
+            </thead>
+            <tbody>
+               {% for i in infos %}
+                    <tr>
+                        <td>{{ i.consultant.dateEmbauche |date('d-m-y') }}</td>
+                        <td>{{ i.consultant.contrat }}</td>
+                        <td>{{ i.besoin.start |date('d-m-y') }}</td>
+                        <td>{{ i.besoin.getDateFin() |date('d-m-y')}}</td>
+                        <td>{{ i.datePrevisionnelle |date('d-m-y')}}</td>
+                        <td>{{ i.besoin.client.name }}</td>
+                        <td>{{ i.consultant.type }}</td>
+                        <td>{{ i.consultant.nom }}</td>
+                        <td>{{ i.consultant.prenom }}</td>
+                        <td>{{ i.tjm }}</td>
+                        <td>{{ i.nbFact }}</td>
+                        <td>{{ i.inter }}</td>
+                        <td class="yellow">{{ i.getCa() }}</td>
+                        <td>{{ i.salaire }}</td>
+                        <td>{{ i.fraisJour }}</td>
+                        <td>{{ i.getMarge() |number_format(0)}}</td>
+                        <td class="{%if i.getPmarge() < 31%}danger-custom{%else%}success-custom{%endif%}">{{ i.getPmarge() }}%</td>
+                        <td>{{ i.valeur }}</td>
+                        {#<td>
+                            <a href="{{ path('client_remove', {'id': c.id}) }}" class="btn glyphicon glyphicon-trash"></a> 
+                        </td>#}
+                    </tr>
+                {% endfor %}
+        </table>
     </div>
-  
+
+                
+                
+                
+{# ----------------------- Formulaire ADD / Remove -------------------------- #}
+{# A factoriser  modif css #}
+    <div class="modal fade" id="add-frais" tabindex="-1" role="dialog" 
+        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Frais managers</h1><br>
+               {{ form_start(form , {'attr': {'class': 'form-horizontal'} }) }}  
+                    {{ form_widget(form) }}
+                    <input type="submit" value="Créer" class="btn btn-default pull-right" />
+                {{ form_end(form) }}    
+            </div>
+        </div>
+    </div>
+{# -------------------------------------------------------------------------- #} 
+
 {% endblock %}
 

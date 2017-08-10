@@ -13,7 +13,9 @@ use EasygestionBundle\Entity\ConsultantInformations;
 use EasygestionBundle\Form\ConsultantType;
 use EasygestionBundle\Form\ConsultantInformationsType;
 use EasygestionBundle\Entity\Client;
+use EasygestionBundle\Entity\FraisIa;
 use EasygestionBundle\Form\ClientType;
+use EasygestionBundle\Form\FraisManagerType;
 
 
 /**
@@ -28,11 +30,12 @@ class BpController extends Controller
     /**
      * @Route("/", name="home_bp")
      * @Security("has_role('ROLE_USER')")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
+     *
      * 
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homeAction()
+    public function homeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -63,8 +66,29 @@ class BpController extends Controller
             throw new NotFoundHttpException("Info doesn't exist");
         }
         
+        $frais = new FraisIa();
+        
+        $form = $this->createForm(FraisManagerType::class, $frais);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $em->persist($frais);
+            $em->flush();
+          
+            return $this->redirectToRoute('home_bp');
+        }
+        
+        $fraisIa = $em->getRepository('EasygestionBundle:FraisIa')->findBy(
+            array(
+                'infos' => $infos,
+        )); 
+        
         return $this->render('EasygestionBundle:Ia/Bp:bp.html.twig', array(
                 'infos' => $infos,
+                'frais' => $fraisIa,
+                'form' => $form->createView(),
         ));
     }
     
@@ -117,6 +141,7 @@ class BpController extends Controller
         $form = $this->createForm(ConsultantInformationsType::class, $consultant_infos, array(
             'ia' => $this->getUser(),
         ));
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
