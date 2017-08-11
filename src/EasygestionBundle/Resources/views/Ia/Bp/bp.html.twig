@@ -19,24 +19,9 @@
     </div>
             
     <div class="clear"></div> 
-    
-    {% set var = [] %}
-    {% set count = 0 %}
-    {% for i in infos %}
-        {{ var['count'] }}
-        {{ var['count + 1'] }}
-        {% if var['count'] = var['count + 1'] %}
-            {%else%}
-            {% var['count'] = i.mois %}
-        {% endif %}
-        {% set count = count + 1 %}
-        
-        
-    {% endfor %}
-    
-    
+   
     <div>
-        <h2>Business plan - {{ "now"|date("Y") }}</h2>
+        <h2>Business plan - {{ mois }} {{ annee }}</h2>
         <a href="{{ path('consultant_new') }}" class="btn btn-success">Nouveau consultant</a>
         <a href="{{ path('consultant_infos_new') }}" class="btn btn-success">Nouvelle fiche</a>
         <a href="#" data-toggle="modal" data-target="#add-frais" class="btn btn-success">Frais Managers</a>
@@ -45,17 +30,38 @@
     <div class="clear"></div> <br>
     
     <div>
-        <!--dropdown menu-->
+       
+        
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Mois
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                {% for i in infos %}
-                    <li><a href="#">{{ i.mois }}</a></li>
-                {% endfor %}
-                <li><a href="#">category 1</a></li>
-                <li><a href="#">category 2</a></li>
+            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+              
+                {%for a in 2017..2020%}
+                <li class="dropdown-submenu"> 
+                    <a tabindex="-1" href="#">{{ a }}</a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href='{{ path('home_bp', {'annee': a, 'mois': 1}) }}'>Janvier</a></li>
+                        {%for k in 2..12%}
+                            {% if k == 2 %} {% set m = 'Février' %}
+                                {% elseif k == 3 %} {% set m = 'Mars' %}
+                                {% elseif k == 4 %} {% set m = 'Avril' %}
+                                {% elseif k == 5 %} {% set m = 'Mai' %}
+                                {% elseif k == 6 %} {% set m = 'Juin' %}
+                                {% elseif k == 7 %} {% set m = 'Juillet' %}
+                                {% elseif k == 8 %} {% set m = 'Août' %}
+                                {% elseif k == 9 %} {% set m = 'Septembre' %}
+                                {% elseif k == 10 %} {% set m = 'Octobre' %}
+                                {% elseif k == 11 %} {% set m = 'Novembre' %}
+                                {% elseif k == 12 %} {% set m = 'Décembre' %}
+                            {%endif%}
+                            <li><a href="{{ path('home_bp', {'annee': a, 'mois': k}) }}"> {{ m }} </a></li>
+                        {%endfor%}
+                                             
+                    </ul>                                   
+                </li>
+                {%endfor%} 
             </ul>
         </div>
         
@@ -70,7 +76,6 @@
                         {% for i in infos %}
                             {% set result = result + i.getMarge() %}
                         {% endfor %}
-                        {% set result = result - frais['0'].frais %}
                         {{ result |number_format(0)}}
                     </td>
                 </tr>
@@ -93,7 +98,11 @@
                             {% set result = result + i.getPmarge() %}
                             {% set count = count + 1 %}
                         {% endfor %}
-                        {{ result / count |number_format(1)}}%
+                        {% if count == 0 %}
+                            {{ 0 |number_format(1)}}%
+                        {% else %}
+                            {{ result / count  |number_format(1)}}%
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -113,7 +122,11 @@
                             {% set result = result + i.tjm %}
                             {% set count = count + 1 %}
                         {% endfor %}
-                        {{ result / count |number_format(1)}}
+                        {% if count == 0 %}
+                            {{ 0 |number_format(1)}}
+                        {% else %}
+                            {{ result / count  |number_format(1)}}
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -124,7 +137,12 @@
                             {% set result = result + i.salaire %}
                             {% set count = count + 1 %}
                         {% endfor %}
-                        {{ result / count |number_format(1)}}</td>
+                        {% if count == 0 %}
+                            {{ 0 |number_format(1)}}
+                        {% else %}
+                            {{ result / count  |number_format(1)}}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Moyenne frais par jour</th>
@@ -135,7 +153,11 @@
                             {% set result = result + i.fraisJour %}
                             {% set count = count + 1 %}
                         {% endfor %}
-                        {{ result / count |number_format(1)}}
+                        {% if count == 0 %}
+                            {{ 0 |number_format(1)}}
+                        {% else %}
+                            {{ result / count  |number_format(1)}}
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -155,7 +177,7 @@
             <tbody>
                 <tr>
                     <th>Frais manager</th>
-                    <td class="success-custom">{{ frais['0'].frais |number_format(2)}}</td>
+                    <td class="success-custom"></td>
                 </tr>
                 <tr>
                     <th>Encours réel</th>
@@ -216,7 +238,11 @@
                             {% set result = result + i.nbFact %}
                             {% set count = count + 1 %}
                         {% endfor %}
-                        {{ result / count |number_format(1)}}
+                        {% if count == 0 %}
+                            {{ 0 |number_format(1)}}
+                        {% else %}
+                            {{ result / count  |number_format(1)}}
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>

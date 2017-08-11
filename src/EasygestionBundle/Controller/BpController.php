@@ -28,7 +28,7 @@ use EasygestionBundle\Form\FraisManagerType;
 class BpController extends Controller
 {
     /**
-     * @Route("/", name="home_bp")
+     * @Route("/{annee}/{mois}", name="home_bp")
      * @Security("has_role('ROLE_USER')")
      * @Method({"GET", "POST"})
      *
@@ -38,6 +38,52 @@ class BpController extends Controller
     public function homeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $annee = $request->get('annee');
+        $mois = $request->get('mois');
+        $mois_bis = "";
+        
+        switch ($mois){
+            case 1:
+                $mois_bis = 'Janvier';
+                break;
+            case 2:
+                $mois_bis = 'Février';
+                break;
+            case 3:
+                $mois_bis = 'Mars';
+                break;
+            case 4:
+                $mois_bis = 'Avril';
+                break;
+            case 5:
+                $mois_bis = 'Mai';
+                break;
+            case 6:
+                $mois_bis = 'Juin';
+                break;
+            case 7:
+                $mois_bis = 'Juillet';
+                break;
+            case 8:
+                $mois_bis = 'Août';
+                break;
+            case 9:
+                $mois_bis = 'Septembre';
+                break;
+            case 10:
+                $mois_bis = 'Octobre';
+                break;
+            case 11:
+                $mois_bis = 'Novembre';
+                break;
+            case 12:
+                $mois_bis = 'Décembre';
+                break;
+        }
+        
+        $current_year = date('Y');
+        $current_month = (int) date('m');
         
         $ia = $em->getRepository('EasygestionBundle:Ia')->findBy(
                 array(
@@ -60,6 +106,8 @@ class BpController extends Controller
         $infos = $em->getRepository('EasygestionBundle:ConsultantInformations')->findBy(
                 array(
                     'besoin' => $besoin,
+                    'annee' => $annee,
+                    'mois' => $mois,
             )); 
         
         if(null === $infos){
@@ -77,7 +125,10 @@ class BpController extends Controller
             $em->persist($frais);
             $em->flush();
           
-            return $this->redirectToRoute('home_bp');
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
         }
         
         $fraisIa = $em->getRepository('EasygestionBundle:FraisIa')->findBy(
@@ -88,6 +139,8 @@ class BpController extends Controller
         return $this->render('EasygestionBundle:Ia/Bp:bp.html.twig', array(
                 'infos' => $infos,
                 'frais' => $fraisIa,
+            'mois' => $mois_bis,
+            'annee' => $annee,
                 'form' => $form->createView(),
         ));
     }
@@ -114,8 +167,11 @@ class BpController extends Controller
             
             $em->persist($consultant);
             $em->flush();
-          
-            return $this->redirectToRoute('home_bp');
+            
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
         }
 
         return $this->render('EasygestionBundle:Ia/Bp:new.html.twig', array(
@@ -150,7 +206,10 @@ class BpController extends Controller
             $em->persist($consultant_infos);
             $em->flush();
           
-            return $this->redirectToRoute('home_bp');
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
         }
 
         return $this->render('EasygestionBundle:Ia/Bp:new.html.twig', array(

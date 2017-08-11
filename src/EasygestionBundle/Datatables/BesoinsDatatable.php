@@ -105,7 +105,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'searchable' => true,
                 'filter' => array(SelectFilter::class, array(
                     'search_type' =>'eq',
-                    'initial_search' => '1',
+                    'initial_search' => '',
                     'select_options' => array(
                         '' => 'Tout',
                         '1' => '1',
@@ -121,16 +121,16 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('client.name', Column::class, array(
                 'title' => 'Client',
-                //'width' => '20%',
-                'filter' => array(Select2Filter::class, array(
+                'width' => '70%',
+                //'filter' => array(Select2Filter::class, array(
                     //'select_options' => array('' => 'All') + $this->getOptionsArrayFromEntities($users, 'username', 'username'),
-                    'search_type' => 'eq',
-                    'url' => 'select2_clients',
-                )),
+                    //'search_type' => 'eq',
+                  //  'url' => 'select2_clients',
+                //)),
             ))
             ->add('workType', Column::class, array(
                 'title' => 'Métier',
-                'width' => '65%',
+                'width' => '70%',
                 //'searchable' => false,
                 'editable' => array(TextEditable::class,
                     array(
