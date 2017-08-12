@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="margin-left: 10px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('mes_besoins') }}">Mes besoins</a></li>
+            <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
+            <li><a href="{{ path('clients') }}">Clients</a></li>
+            <li><a href="{{ path('home_bp', {'annee': c_year, 'mois': c_month}) }}">Business Plan</a></li>
+            <li><a href="#}">Mon profil</a></li>
+        </ul>
+    </div>
+
+    
+    <h2></h2>
+    <hr>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Edit" class="btn btn-primary" />
+    {{ form_end(form) }}
+{% endblock %}

@@ -34,7 +34,13 @@ class IaController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('EasygestionBundle:Ia:home_ia.html.twig');
+        $current_year = date('Y');
+        $current_month = (int) date('m');
+        
+        return $this->render('EasygestionBundle:Ia:home_ia.html.twig', array(
+            'c_year' => $current_year,
+            'c_month' => $current_month,
+        ));
     }
     
     /**
@@ -50,6 +56,9 @@ class IaController extends Controller
      */
     public function mesBesoinsAction(Request $request)
     {
+        $current_year = date('Y');
+        $current_month = (int) date('m');
+        
         $isAjax = $request->isXmlHttpRequest();
       
         /** @var DatatableInterface $datatable */
@@ -106,6 +115,8 @@ class IaController extends Controller
             'clients' => $clients,
             'form' => $form->createView(),
             'archive' => $archive,
+            'c_year' => $current_year,
+            'c_month' => $current_month,
         ));
     }
     
@@ -174,6 +185,8 @@ class IaController extends Controller
      */
     public function archivesAction()
     {
+        $current_year = date('Y');
+        $current_month = (int) date('m');
         $em = $this->getDoctrine()->getManager();
   
         $archive = $em->getRepository('EasygestionBundle:Besoin')->findBy(array(
@@ -182,6 +195,8 @@ class IaController extends Controller
         
         return $this->render('EasygestionBundle:ia:archives.html.twig', array(
             'archive' => $archive,
+            'c_year' => $current_year,
+            'c_month' => $current_month,
         ));
     }
     

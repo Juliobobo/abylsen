@@ -109,10 +109,7 @@ class BpController extends Controller
         
         $annee = $request->get('annee');
         $mois = $request->get('mois');
-        
-        $current_year = date('Y');
-        $current_month = (int) date('m');
-        
+           
         $ia = $em->getRepository('EasygestionBundle:Ia')->findBy(
                 array(
                     'id' => $this->getUser()->getId(),
@@ -261,7 +258,11 @@ class BpController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editFraisAction(Request $request, FraisIa $frais)
-    {
+    {        
+        
+        $current_year = date('Y');
+        $current_month = (int) date('m');
+     
         $form = $this->createForm(FraisManagerType::class, $frais);
         $form->handleRequest($request);
 
@@ -274,8 +275,9 @@ class BpController extends Controller
             ));
         }
 
-        return $this->render('EasygestionBundle:Ia/Bp:edit.html.twig', array(
-            'frais' => $frais,
+        return $this->render('EasygestionBundle:Ia/Bp:edit_frais.html.twig', array(
+            'c_year' => $current_year,
+            'c_month' => $current_month,
             'form' => $form->createView(),
         ));
     }
