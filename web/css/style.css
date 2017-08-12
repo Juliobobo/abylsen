@@ -17,6 +17,17 @@ body {
     font-family:'JF Flat Regular',Arial,Tahoma,Sans-serif;
 }
 
+.edit-custom {
+    color: #fff;
+    margin-left: 5px;
+}
+
+
+.edit-custom:hover {
+    color: red;
+    text-decoration: none;
+}
+
 /*--- Header ---*/
 .nav_right {
     float: right;

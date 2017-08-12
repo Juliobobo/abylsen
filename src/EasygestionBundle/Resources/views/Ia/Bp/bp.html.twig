@@ -24,8 +24,12 @@
         <h2>Business plan - {{ mois }} {{ annee }}</h2>
         <a href="{{ path('consultant_new') }}" class="btn btn-success">Nouveau consultant</a>
         <a href="{{ path('consultant_infos_new') }}" class="btn btn-success">Nouvelle fiche</a>
-        <a href="#" data-toggle="modal" data-target="#add-frais" class="btn btn-success">Frais Managers</a>
-    </div>
+        {% if frais is not empty %}
+            <a href="{{ path('frais_edit', {'id': frais['0'].id} ) }}" class="btn btn-success">Edit frais</a>
+        {% else %}
+           <a href="#" data-toggle="modal" data-target="#add-frais" class="btn btn-success">Frais Managers</a>      
+        {% endif%}
+        </div>
 
     <div class="clear"></div> <br>
     
@@ -177,9 +181,11 @@
             <tbody>
                 <tr>
                     <th>Frais manager</th>
-                    <td class="success-custom">{{ frais['0'].getFraisTotaux() }}
-                        <a href="#"> cc</a>
-                    </td>
+                    {% if frais is not empty %}
+                        <td class="success-custom">{{ frais['0'].getFraisTotaux() }}€</td>
+                    {% else %}
+                        <td class="success-custom">0€</td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <th>Encours réel</th>
@@ -344,7 +350,8 @@
             </div>
         </div>
     </div>
-{# -------------------------------------------------------------------------- #} 
+{# -------------------------------------------------------------------------- #}
+
 
 {% endblock %}
 

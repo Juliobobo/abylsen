@@ -27,23 +27,9 @@ use EasygestionBundle\Form\FraisManagerType;
  */
 class BpController extends Controller
 {
-    /**
-     * @Route("/{annee}/{mois}", name="home_bp")
-     * @Security("has_role('ROLE_USER')")
-     * @Method({"GET", "POST"})
-     *
-     * 
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function homeAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function choiceMonth($param) {
         
-        $annee = $request->get('annee');
-        $mois = $request->get('mois');
-        $mois_bis = "";
-        
-        switch ($mois){
+        switch ($param){
             case 1:
                 $mois_bis = 'Janvier';
                 break;
@@ -81,6 +67,48 @@ class BpController extends Controller
                 $mois_bis = 'Décembre';
                 break;
         }
+        return $mois_bis;
+    }
+    
+    public function form(Request $request, $param, $mois) {
+
+        $form = $this->createForm(FraisManagerType::class, $param);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $param->setMois($mois);
+            
+            $em->persist($param);
+            $em->flush();
+          
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
+        }
+        
+        return $form;
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * 
+     * @Route("/{annee}/{mois}", name="home_bp")
+     * @Security("has_role('ROLE_USER')")
+     * @Method({"GET", "POST"})
+     *
+     * 
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function homeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $annee = $request->get('annee');
+        $mois = $request->get('mois');
         
         $current_year = date('Y');
         $current_month = (int) date('m');
@@ -141,8 +169,8 @@ class BpController extends Controller
         return $this->render('EasygestionBundle:Ia/Bp:bp.html.twig', array(
                 'infos' => $infos,
                 'frais' => $fraisIa,
-            'mois' => $mois_bis,
-            'annee' => $annee,
+                'mois' => $this->choiceMonth($mois),
+                'annee' => $annee,
                 'form' => $form->createView(),
         ));
     }
@@ -219,128 +247,35 @@ class BpController extends Controller
             'form' => $form->createView(),
         ));
     }
-    
-    
+   
     /**
-     * Liste des besoins archives d'un IA
-     *
-     * @Route("/archives", name="besoins_archives", options = {"expose" = true})
-     * @Method({"GET"})
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function archivesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-  
-        $archive = $em->getRepository('EasygestionBundle:Besoin')->findBy(array(
-            'archive' => 1,
-        ));
-        
-        return $this->render('EasygestionBundle:ia:archives.html.twig', array(
-            'archive' => $archive,
-        ));
-    }
-    
-    /**
-     * Finds and displays a besoin.
-     *
-     * @param Besoin $besoin
-     *
-     * @Route("/show/{id}", name="besoin_show", options = {"expose" = true})
-     * @Method("GET")
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @return Response
-     */
-    public function showAction(Besoin $besoin)
-    {
-        $form = $this->createForm(BesoinType::class, $besoin);
-        
-        return $this->render('EasygestionBundle:ia:show.html.twig', array(
-            'besoin' => $besoin,
-            'form' => $form->createView(),
-        ));
-    }
-    
-    /**
-     * Add and show client
+     * Displays a form to edit an existing frais.
      *
      * @param Request $request
+     * @param FraisIa  $frais
      *
-     * @Route("/clients", name="clients", options = {"expose" = true})
+     * @Route("/frais/{id}/edit", name="frais_edit", options = {"expose" = true})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER')")
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function clientAction(Request $request)
-    {       
-        //Clients
-        $em = $this->getDoctrine()->getManager();
-        $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
-        
-        if(null === $clients){
-            throw new NotFoundHttpException("Client doesn't exist");
-        }   
-
-        $client = new Client();
-        
-        $form = $this->createForm(ClientType::class, $client);
-        
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            
-            $em->persist($client);
-            $em->flush();
-            
-            return $this->redirectToRoute('homepage');
-        }
-        
-        return $this->render('EasygestionBundle:ia:clients.html.twig', array(
-            'clients' => $clients,
-            'form' => $form->createView(),
-        ));
-    }
-    /**
-     * Creates a new Besoin.
-     *
-     * @param Request $request
-     *
-     * @Route("/new", name="besoin_new")
-     * @Method({"GET", "POST"})
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function newsAction(Request $request)
+    public function editFraisAction(Request $request, FraisIa $frais)
     {
-        $besoin = new Besoin();
-        
-        $form = $this->createForm(BesoinType::class, $besoin);
+        $form = $this->createForm(FraisManagerType::class, $frais);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            
-            // = $em->getRepository('EasygestionBundle:Ia')->findBy(array(
-              //  'initials' => $this->getUser()->getInitials(),
-            //));
-            
-            $besoin->setArchive(0);
-           // $besoin->setCreatedBy($ia);
-            
-            $em->persist($besoin);
-            $em->flush();
-          
-            return $this->redirectToRoute('mes_besoins');
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
         }
 
-        return $this->render('EasygestionBundle:ia:new.html.twig', array(
-            'besoin' => $besoin,
-            //'ia' => $ia,
+        return $this->render('EasygestionBundle:Ia/Bp:edit.html.twig', array(
+            'frais' => $frais,
             'form' => $form->createView(),
         ));
     }
