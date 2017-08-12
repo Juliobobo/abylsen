@@ -127,6 +127,14 @@ class ConsultantInformations
     private $valeur;
     
     /**
+     * info constructor.
+     */
+    public function __construct()
+    {
+        $this->annee = (int) date("Y");
+    }
+    
+    /**
      * Get id
      *
      * @return int
@@ -484,7 +492,7 @@ class ConsultantInformations
         if($this->tjm == 0){
             return 0;
         }else{
-            return number_format($ca = $this->nbFact * $this->tjm, 0);
+            return $ca = $this->nbFact * $this->tjm;
         }
     }
     
@@ -496,12 +504,12 @@ class ConsultantInformations
     public function getMarge()
     {
         return (
-        number_format(($this->nbFact * $this->tjm) 
+       ($this->nbFact * $this->tjm) 
                     - (((($this->salaire * 2.02) / 218)*($this->nbFact + $this->inter + $this->absNr))
                     + ($this->fraisJour * ($this->nbFact + $this->inter)) 
                     + $this->fraisOne + $this->fraisTwo) * $this->valeur
                     - 2 * $this->valeur * $this->primeBrute
-                , 0));
+                );
     }
     
     /**
@@ -513,5 +521,53 @@ class ConsultantInformations
     {
         return (
         number_format(($this->getMarge() / $this->getCa()) * 100, 0));
+    }
+
+    /**
+     * Set annee
+     *
+     * @param integer $annee
+     *
+     * @return ConsultantInformations
+     */
+    public function setAnnee($annee)
+    {
+        $this->annee = $annee;
+
+        return $this;
+    }
+
+    /**
+     * Get annee
+     *
+     * @return integer
+     */
+    public function getAnnee()
+    {
+        return $this->annee;
+    }
+
+    /**
+     * Set frais
+     *
+     * @param \EasygestionBundle\Entity\FraisIa $frais
+     *
+     * @return ConsultantInformations
+     */
+    public function setFrais(\EasygestionBundle\Entity\FraisIa $frais = null)
+    {
+        $this->Frais = $frais;
+
+        return $this;
+    }
+
+    /**
+     * Get frais
+     *
+     * @return \EasygestionBundle\Entity\FraisIa
+     */
+    public function getFrais()
+    {
+        return $this->Frais;
     }
 }

@@ -122,6 +122,8 @@ class BpController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             
+            $frais->setMois($mois);
+            
             $em->persist($frais);
             $em->flush();
           
@@ -133,7 +135,7 @@ class BpController extends Controller
         
         $fraisIa = $em->getRepository('EasygestionBundle:FraisIa')->findBy(
             array(
-                'infos' => $infos,
+                'mois' => $mois,
         )); 
         
         return $this->render('EasygestionBundle:Ia/Bp:bp.html.twig', array(

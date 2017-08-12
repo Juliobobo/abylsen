@@ -3,6 +3,7 @@
 namespace EasygestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * FraisIa
@@ -35,12 +36,12 @@ class FraisIa
      */
     private $frais;
     
-    
     /**
+     * @var int
      *
-     * @ORM\OneToOne(targetEntity="ConsultantInformations", cascade={"persist"})
+     * @ORM\Column(name="mois", type="integer", unique=true)
      */
-    private $infos;
+    private $mois;
     
     /**
      * Frais constructor.
@@ -105,30 +106,40 @@ class FraisIa
      */
     public function getFrais()
     {
+        return $this->frais;
+    }
+    
+    /**
+     * Get frais totaux
+     *
+     * @return string
+     */
+    public function getFraisTotaux()
+    {
         return $this->frais + $this->fraisFixe;
     }
-
+    
     /**
-     * Set infos
+     * Set mois
      *
-     * @param \EasygestionBundle\Entity\ConsultantInformations $infos
+     * @param integer $mois
      *
      * @return FraisIa
      */
-    public function setInfos(\EasygestionBundle\Entity\ConsultantInformations $infos = null)
+    public function setMois($mois)
     {
-        $this->infos = $infos;
+        $this->mois = $mois;
 
         return $this;
     }
 
     /**
-     * Get infos
+     * Get mois
      *
-     * @return \EasygestionBundle\Entity\ConsultantInformations
+     * @return integer
      */
-    public function getInfos()
+    public function getMois()
     {
-        return $this->infos;
+        return $this->mois;
     }
 }

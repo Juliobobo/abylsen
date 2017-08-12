@@ -546,4 +546,28 @@ class ConsultantInformations
     {
         return $this->annee;
     }
+
+    /**
+     * Set frais
+     *
+     * @param \EasygestionBundle\Entity\FraisIa $frais
+     *
+     * @return ConsultantInformations
+     */
+    public function setFrais(\EasygestionBundle\Entity\FraisIa $frais = null)
+    {
+        $this->Frais = $frais;
+
+        return $this;
+    }
+
+    /**
+     * Get frais
+     *
+     * @return \EasygestionBundle\Entity\FraisIa
+     */
+    public function getFrais()
+    {
+        return $this->Frais;
+    }
 }

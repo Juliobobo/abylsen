@@ -31,7 +31,7 @@
     
     <div>
        
-        
+        {{ dump(frais) }}
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Mois
                 <span class="caret"></span>
@@ -177,7 +177,9 @@
             <tbody>
                 <tr>
                     <th>Frais manager</th>
-                    <td class="success-custom"></td>
+                    <td class="success-custom">{{ frais['0'].getFraisTotaux() }}
+                        <a href="#"> cc</a>
+                    </td>
                 </tr>
                 <tr>
                     <th>Encours réel</th>

@@ -16,21 +16,12 @@ class FraisManagerType extends AbstractType
         
         //Formulaire
         $builder
+                ->add('fraisFixe', NumberType::class, array(
+                    'label' => 'Frais fixe',
+                ))
                 ->add('frais', NumberType::class, array(
                     'label' => 'Frais',
-                ))
-                ->add('infos', EntityType::class, array(
-                    'placeholder' => 'Quel mois ?',
-                    'class' => 'EasygestionBundle:ConsultantInformations',
-                    'choice_label' => 'mois',
-                    'label' => 'Mois',
-                    'query_builder' => function (ConsultantInformationsRepository $er) {
-                        return $er->createQueryBuilder('i')
-                                    ->where('i.annee = :annee')
-                                    ->setParameter('annee', (int) date("Y"));
-                    },
-                ))
-                ;
+                ));
         
     }
     
