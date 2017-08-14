@@ -3,6 +3,7 @@
 namespace EasygestionBundle\Controller;
 
 use EasygestionBundle\Datatables\BesoinsDatatable;
+use EasygestionBundle\Datatables\BizzDatatable;
 use EasygestionBundle\Datatables\ArchivesDatatable;
 use EasygestionBundle\Entity\Client;
 use EasygestionBundle\Form\ClientType;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use EasygestionBundle\Entity\Besoin;
 use EasygestionBundle\Form\BesoinType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Gestion controller.
@@ -37,11 +40,11 @@ class GestionController extends Controller
      * @return Response
      */
     public function listAllAction(Request $request)
-    {
+    {   
         $isAjax = $request->isXmlHttpRequest();
       
         /** @var DatatableInterface $datatable */
-        $datatable = $this->get('sg_datatables.factory')->create(BesoinsDatatable::class);
+        $datatable = $this->get('sg_datatables.factory')->create(BizzDatatable::class);
         $datatable->buildDatatable();
 
         if ($isAjax) {
@@ -64,55 +67,37 @@ class GestionController extends Controller
         ));
     }
     
-    
     /**
-     * Liste des besoins d'un IA
-     *
-     * @param Request $request
-     *
-     * @Route("/ia", name="besoins_ia", options = {"expose" = true})
-     * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function besoinsIaAction(Request $request)
-    {
-        $isAjax = $request->isXmlHttpRequest();
-      
-        /** @var DatatableInterface $datatable */
-        $datatable = $this->get('sg_datatables.factory')->create(BesoinsDatatable::class);
-        $datatable->buildDatatable();
+    * @param Request $request
+    *
+    * @Route("/initials", name="select2_ia")
+    *
+    * @return JsonResponse|Response
+    */
+   public function select2Ia(Request $request)
+   {
+       if ($request->isXmlHttpRequest()) {
+           $em = $this->getDoctrine()->getManager();
+           $users = $em->getRepository('EasygestionBundle:Ia')->findAll();
 
-        if ($isAjax) {
-            $responseService = $this->get('sg_datatables.response');
-            $responseService->setDatatable($datatable);
+           $result = array();
 
-            $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $datatableQueryBuilder->buildQuery();                    
-            
-            /** @var QueryBuilder $qb */
-            $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere('createdBy.initials = :initials');
-            $qb->setParameter('initials', $this->getUser()->getInitials());
-            
-            $qb->andWhere('besoin.archive = :archive');
-            $qb->setParameter('archive', 0);
+           foreach ($users as $user) {
+               $result[$user->getId()] = $user->getInitials();
+           }
 
-            return $responseService->getResponse();
-        }
-        
-        return $this->render('EasygestionBundle:ia:mesbesoins.html.twig', array(
-            'datatable' => $datatable,
-        ));
-    }
+           return new JsonResponse($result);
+       }
+
+       return new Response('Bad request.', 400);
+   }
     
     /**
      * Creates a new Besoin.
      *
      * @param Request $request
      *
-     * @Route("/new", name="besoin_new")
+     * @Route("/new", name="gestion_new")
      * @Method({"GET", "POST"})
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -131,10 +116,8 @@ class GestionController extends Controller
             $em->persist($besoin);
             $em->flush();
             
-            if($this->isGranted('ROLE_ADMIN')){
-                return $this->redirectToRoute('gestion_index');
-            }
-            return $this->redirectToRoute('besoins_ia');
+            return $this->redirectToRoute('gestion_index');
+            
         }
 
         return $this->render('EasygestionBundle:gestion:new.html.twig', array(
@@ -149,7 +132,7 @@ class GestionController extends Controller
      * @param $id
      * @param $besoin
      *
-     * /**@Route("/arch/{id}", name="besoin_archive")
+     * /**@Route("/arch/{id}", name="gestion_archive")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER') and besoin.isOwner(user) or has_role('ROLE_ADMIN')")
      * 
@@ -165,11 +148,7 @@ class GestionController extends Controller
             $em->flush();
         }
         
-        if($this->isGranted('ROLE_ADMIN')){
-            return $this->redirectToRoute('gestion_index');
-        }
-        
-        return $this->redirectToRoute('besoins_ia');
+        return $this->redirectToRoute('gestion_index');    
     }
     
     /**
@@ -177,7 +156,7 @@ class GestionController extends Controller
      *
      * @param Besoin $besoin
      *
-     * @Route("/{id}", name="besoin_show", options = {"expose" = true})
+     * @Route("/{id}", name="gestion_show", options = {"expose" = true})
      * @Method("GET")
      * @Security("has_role('ROLE_USER')")
      *
@@ -199,7 +178,7 @@ class GestionController extends Controller
      * @param Request $request
      * @param Besoin  $besoin
      *
-     * @Route("/{id}/edit", name="besoin_edit", options = {"expose" = true})
+     * @Route("/{id}/edit", name="gestion_edit", options = {"expose" = true})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER') and besoin.isOwner(user) or has_role('ROLE_ADMIN')")
      *
@@ -221,32 +200,4 @@ class GestionController extends Controller
             'form' => $form->createView(),
         ));
     }
-    
-    /**
-     * Remove un client.
-     *
-     * @param $id
-     *
-     * @Route("/remclient/{id}", name="client_remove")
-     * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
-     * 
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function removeClientAction($id){
-        
-        $em = $this->getDoctrine()->getManager();
-        $client = $em->find('EasygestionBundle:Client', $id);
-
-        if (!$client) 
-        {
-          throw new NotFoundHttpException("Le client n'existe pas !");
-        }
-        
-        $em->remove($client);
-        $em->flush();        
-        
-        return $this->redirect($this->generateUrl('besoins_ia'));
-    }
-
 }

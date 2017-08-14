@@ -1,8 +1,14 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    <div>
-        <a href="{{ path('homepage') }}">Retour</a>
+    <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+        </ul>
     </div>
     
     <div>
@@ -10,10 +16,16 @@
     </div>
     
     <div>
-        <a href="{{ path('besoin_new') }}" class="btn btn-success glyphicon glyphicon-plus"></a>
+        <a href="{{ path('gestion_new') }}" class="btn btn-success glyphicon glyphicon-plus"></a>
     </div>
     
-    <br />
+    <div class="clear"></div> <br>
+
+    <div class="legend">
+        
+    </div>
+    
+    <div class="clear"></div> <br>
     
     <div>
         {{ sg_datatables_render(datatable) }}

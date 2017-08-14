@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    
+   <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+        </ul>
+    </div>
+   
+    <div class="clear"></div>
+    
+    <div>
+        <h2>Report - S22</h2>
+        <a href="{{ path('consultant_new') }}" class="btn btn-success"></a>
+        <a href="{{ path('consultant_infos_new') }}" class="btn btn-success"></a>
+    </div>
+        
+{% endblock %}
+

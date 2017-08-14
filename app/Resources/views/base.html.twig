@@ -89,8 +89,8 @@
                             </li>
                         {% else %}
                             <li>
-                                <a href="{{ path('homepage') }}">
-                                    <i class="btn btn-success glyphicon glyphicon-log-in"></i> 
+                                <a href="{{ path('fos_user_registration_register') }}">
+                                    <i class="btn btn-success glyphicon glyphicon-user"></i> 
                                 </a>
                             </li>
                         {% endif %}
@@ -120,6 +120,7 @@
                 </div>
             </div>#}
         {% endblock %}
+        {% block fos_user_content %}{% endblock %}
     </div>
 
     <div id="footer">

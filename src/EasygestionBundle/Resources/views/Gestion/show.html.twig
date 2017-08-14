@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block main %}
+{% block body %}
     <div>
         <div class="navigation">
-            <a href="{{ path('home_ia') }}" style="margin-left:20px;" 
+            <a href="{{ path('gestion_index') }}" style="margin-left:20px;" 
                 class="glyphicon glyphicon-arrow-left">
             </a>
         </div>
@@ -61,7 +61,7 @@
             </tr>
             <tr>
                 <th>Profil</th>
-                <td></td>
+                <td>{{ besoin.createdby.initials }}</td>
             </tr>
             <tr>
                 <th>Solution</th>
@@ -69,8 +69,4 @@
             </tr>
         </tbody>
     </table>
-    
-    <hr>
-    
-    <a href="{{ path('besoin_edit', { 'id': besoin.id }) }}" class="btn btn-primary">Edit</a>
 {% endblock %}

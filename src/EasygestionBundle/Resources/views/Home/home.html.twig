@@ -26,10 +26,14 @@
         <div class="col-md-8 col-md-offset-2">
             <div id="action">
                 <div class="col-md-4">
-                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED")%}
-                   <a href="#">  
+                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                       {% if is_granted("ROLE_ADMIN") %}
+                           <a href="{{ path('home_report') }}">     
+                       {% else %}
+                           <h1> Not Admin </h1>
+                       {% endif %}   
                    {% else %}
-                   <a href="#" id="directeur">
+                   <a href="#" id="reunion">
                    {% endif %}
                        <div class="link">
                            <img src="{{ asset('img/logo.jpeg') }}" width="160px">

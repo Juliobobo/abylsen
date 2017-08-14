@@ -21,13 +21,12 @@ use Sg\DatatablesBundle\Datatable\Filter\TextFilter;
 use Sg\DatatablesBundle\Datatable\Filter\NumberFilter;
 use Sg\DatatablesBundle\Datatable\Filter\SelectFilter;
 
-
 /**
  * Class BesoinDatatable
  *
  * @package EasygestionBundle\Datatables
  */
-class BesoinsDatatable extends AbstractDatatable
+class BizzDatatable extends AbstractDatatable
 {
     /**
      * {@inheritdoc}
@@ -53,6 +52,7 @@ class BesoinsDatatable extends AbstractDatatable
         ));
         
         $this->extensions->set(array(
+            //'buttons' => true,
             'buttons' => array(
                 'create_buttons' => array(
                         array(
@@ -79,7 +79,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'title' => 'Status',
                 'class_name' => 'translate-img',
                 'filter' => array(SelectFilter::class, array(
-                    'classes' => 'test1 test2',
+                    'initial_search' => '1',
                     'search_type' => 'eq',
                     'select_options' => array(
                         '' => 'Tout',
@@ -107,10 +107,13 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('createdBy.initials', Column::class, array(
                 'title' => 'IA',
-                'searchable' => false,
-                //'add_if' => function(){
-                  //  return !$this->authorizationChecker->isGranted('ROLE_USER');
-                //},
+                'searchable' => true,
+                'width' => '90%',
+                'filter' => array(Select2Filter::class, array(
+                    'search_type' => 'eq',
+                    'multiple' => true,
+                    'url' => 'select2_ia',
+                )),
             ))
             ->add('priority', Column::class, array(
                 'title' => 'Priorité',
@@ -118,7 +121,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'searchable' => true,
                 'filter' => array(SelectFilter::class, array(
                     'search_type' =>'eq',
-                    'initial_search' => '',
+                    'initial_search' => '1',
                     'select_options' => array(
                         '' => 'Tout',
                         '1' => '1',
@@ -135,11 +138,6 @@ class BesoinsDatatable extends AbstractDatatable
             ->add('client.name', Column::class, array(
                 'title' => 'Client',
                 'width' => '70%',
-                //'filter' => array(Select2Filter::class, array(
-                    //'select_options' => array('' => 'All') + $this->getOptionsArrayFromEntities($users, 'username', 'username'),
-                    //'search_type' => 'eq',
-                  //  'url' => 'select2_clients',
-                //)),
             ))
             ->add('workType', Column::class, array(
                 'title' => 'Métier',
@@ -165,7 +163,7 @@ class BesoinsDatatable extends AbstractDatatable
             ))
             ->add('start', DateTimeColumn::class, array(
                 'title' => 'Start',
-                'width' => '60%',
+                'width' => '70%',
                 'date_format' => 'L',
                 //'searchable' => false,
                 'editable' => array(CombodateEditable::class, array(
@@ -207,7 +205,7 @@ class BesoinsDatatable extends AbstractDatatable
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(
                     array(
-                      'route' => 'besoin_archivage',
+                      'route' => 'gestion_archive',
                         'route_parameters' => array(
                             'id' => 'id',
                         ),
@@ -217,16 +215,9 @@ class BesoinsDatatable extends AbstractDatatable
                             'class' => 'btn btn-primary btn-xs',
                             'role' => 'button',
                         ),
-                        /*'render_if' => function ($row) {
-                            if($row['archive'] == 1){
-                                return false;
-                            }
-                            
-                            return true;
-                        },*/
                     ),
                     array(
-                      'route' => 'besoin_show',
+                      'route' => 'gestion_show',
                         'route_parameters' => array(
                             'id' => 'id',
                         ),
