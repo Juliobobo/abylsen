@@ -14,7 +14,9 @@ class ClientType extends AbstractType
         
         //Formulaire
         $builder
-                ->add('name', TextType::class);
+                ->add('name', TextType::class, array(
+                    'label' => 'Nom',
+                ));
         
     }
     

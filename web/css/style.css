@@ -104,8 +104,13 @@ header {
     text-align: center;
     margin: 40px 20px;
 }
+
 #login_form {
     display: block;
+}
+
+#login_form a {
+    color: #fff;
 }
 
 #action {
@@ -135,6 +140,9 @@ header {
     float: right;
 }
 
+.btn-forgot,
+.register input[type="text"],
+.register input[type="password"]
 .login input[type="text"],
 .login input[type="password"]
 {
@@ -155,6 +163,12 @@ header {
     font: 95% Arial, Helvetica, sans-serif;
 }
 
+.btn-forgot a,
+.btn-forgot input[type="submit"],
+.btn-forgot input[type="button"],
+.register a,
+.register input[type="submit"],
+.register input[type="button"],
 .login a,
 .login input[type="submit"],
 .login input[type="button"]{
@@ -172,17 +186,33 @@ header {
     cursor:pointer;
 }
 
+.btn-forgot input[type="submit"]:hover,
+.btn-forgot input[type="button"]:hover,
+.register input[type="submit"]:hover,
+.register input[type="button"]:hover,
 .login input[type="submit"]:hover,
 .login input[type="button"]:hover{
     background: #c7d3d9;
 }
 
+.btn-forgot {
+    border: none;
+}
 
-/*--- Home Ia ---*/
+/*--- Registration ---*/
 
+.panel-primary {  
+    border-color: #466C7E;
+}
 
-
-
+.panel-primary > .panel-heading {
+    background: #466c7e;
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+}
 
 
 
@@ -329,8 +359,15 @@ a.editable-click:hover {
 }
 
 
+/*--- Table Client ---*/
+.table-client {
+    width: 25%;
+}
 
 
+.table-profile {
+    background-color: #F7F7F7;
+}
 
 /***** Glyph ******/
 

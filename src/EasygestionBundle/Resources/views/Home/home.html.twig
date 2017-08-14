@@ -28,31 +28,31 @@
                 <div class="col-md-4">
                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                        {% if is_granted("ROLE_ADMIN") %}
-                           <a href="{{ path('home_report') }}">     
+                           <a href="{{ path('home_report') }}">
+                                <div class="link">
+                                    <img src="{{ asset('img/logo.jpeg') }}" width="160px">   
                        {% else %}
-                           <h1> Not Admin </h1>
-                       {% endif %}   
-                   {% else %}
-                   <a href="#" id="reunion">
+                           <a href="#" id="reunion">
+                               <div class="link">
+                                    <img src="{{ asset('img/interdit.png') }}" width="160px">   
+                       {% endif %}                      
                    {% endif %}
-                       <div class="link">
-                           <img src="{{ asset('img/logo.jpeg') }}" width="160px">
-                           <div class="clear"></div><span>Directeur</span>
+                           <div class="clear"></div><span>Reporting</span>
                        </div>
                    </a>
                 </div>
                 <div class="col-md-4">
                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                        {% if is_granted("ROLE_ADMIN") %}
-                           <a href="{{ path('gestion_index') }}">     
+                           <a href="{{ path('gestion_index') }}">
+                                <div class="link">
+                                    <img src="{{ asset('img/logo.jpeg') }}" width="160px">   
                        {% else %}
-                           <h1> Not Admin </h1>
-                       {% endif %}   
-                   {% else %}
-                   <a href="#" id="reunion">
+                           <a href="#" id="reunion">
+                               <div class="link">
+                                    <img src="{{ asset('img/interdit.png') }}" width="160px">   
+                       {% endif %}                      
                    {% endif %}
-                       <div class="link">
-                                <img src="{{ asset('img/logo.jpeg') }}" width="160px">
                                 <div class="clear"></div><span>Réunion business</span>
                        </div>
                    </a>

@@ -3,7 +3,7 @@
 <h2>{{ user.username }}</h2>
 <hr>
 <h3>Profile</h3>
-<table class="table">
+<table class="table table-profile">
     <tr>
         <td>{{ 'profile.show.username'|trans }}:</td>
         <td>{{ user.username }}</td>
@@ -12,6 +12,11 @@
         <td>{{ 'profile.show.email'|trans }}:</td>
         <td>{{ user.email }}</td>
     </tr>
+    <tr>
+        <td>initials:</td>
+        <td>{{ user.initials }}</td>
+    </tr>
 </table>
-
-<a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary">Edit</a>
+    
+<a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary">Editer</a>
+<a href="{{ path('fos_user_change_password') }}" class="btn btn-primary">Changer de password</a>

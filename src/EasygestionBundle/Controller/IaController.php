@@ -110,7 +110,7 @@ class IaController extends Controller
             return $this->redirectToRoute('besoins_ia');
         }
         
-        return $this->render('EasygestionBundle:ia:mesbesoins.html.twig', array(
+        return $this->render('EasygestionBundle:ia/mesbesoins:mesbesoins.html.twig', array(
             'datatable' => $datatable,
             'clients' => $clients,
             'form' => $form->createView(),
@@ -118,60 +118,6 @@ class IaController extends Controller
             'c_year' => $current_year,
             'c_month' => $current_month,
         ));
-    }
-    
-    /**
-     * Get all client from Database to show in Select2-Filter.
-     *
-     * @param Request $request
-     *
-     * @Route("/clients", name="select2_clients")
-     *
-     * @return JsonResponse|Response
-     */
-    public function select2Clients(Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
-
-            $result = array();
-
-            foreach ($clients as $client) {
-                $result[$client->getId()] = $client->getName();
-            }
-
-            return new JsonResponse($result);
-        }
-
-        return new Response('Bad request.', 400);
-    }
-    
-    /**
-     * Get all client from Database to show in Select2-Filter.
-     *
-     * @param Request $request
-     *
-     * @Route("/ias", name="select2_ias")
-     *
-     * @return JsonResponse|Response
-     */
-    public function select2Ia(Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $Ias = $em->getRepository('EasygestionBundle:Ia')->findAll();
-
-            $result = array();
-
-            foreach ($Ias as $Ia) {
-                $result[$Ia->getId()] = $Ia->getInitials();
-            }
-
-            return new JsonResponse($result);
-        }
-
-        return new Response('Bad request.', 400);
     }
     
     /**
@@ -193,7 +139,7 @@ class IaController extends Controller
             'archive' => 1,
         ));
         
-        return $this->render('EasygestionBundle:ia:archives.html.twig', array(
+        return $this->render('EasygestionBundle:ia/archives:archives.html.twig', array(
             'archive' => $archive,
             'c_year' => $current_year,
             'c_month' => $current_month,
@@ -266,50 +212,8 @@ class IaController extends Controller
     {
         $form = $this->createForm(BesoinType::class, $besoin);
         
-        return $this->render('EasygestionBundle:ia:show.html.twig', array(
+        return $this->render('EasygestionBundle:ia/mesbesoins:show.html.twig', array(
             'besoin' => $besoin,
-            'form' => $form->createView(),
-        ));
-    }
-    
-    /**
-     * Add and show client
-     *
-     * @param Request $request
-     *
-     * @Route("/clients", name="clients", options = {"expose" = true})
-     * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function clientAction(Request $request)
-    {       
-        //Clients
-        $em = $this->getDoctrine()->getManager();
-        $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
-        
-        if(null === $clients){
-            throw new NotFoundHttpException("Client doesn't exist");
-        }   
-
-        $client = new Client();
-        
-        $form = $this->createForm(ClientType::class, $client);
-        
-        $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            
-            $em->persist($client);
-            $em->flush();
-            
-            return $this->redirectToRoute('homepage');
-        }
-        
-        return $this->render('EasygestionBundle:ia:clients.html.twig', array(
-            'clients' => $clients,
             'form' => $form->createView(),
         ));
     }
@@ -347,10 +251,77 @@ class IaController extends Controller
             return $this->redirectToRoute('mes_besoins');
         }
 
-        return $this->render('EasygestionBundle:ia:new.html.twig', array(
+        return $this->render('EasygestionBundle:ia/mesbesoins:new.html.twig', array(
             'besoin' => $besoin,
             //'ia' => $ia,
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * Add and show client
+     *
+     * @param Request $request
+     *
+     * @Route("/clients", name="mes_clients")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function clientsAction(Request $request)
+    {       
+        
+        $current_year = date('Y');
+        $current_month = (int) date('m');
+        
+        //Clients
+        $em = $this->getDoctrine()->getManager();
+        $clients = $em->getRepository('EasygestionBundle:Client')->findAll();
+        
+        if(null === $clients){
+            throw new NotFoundHttpException("Client doesn't exist");
+        }   
+
+        $client = new Client();
+        
+        $form = $this->createForm(ClientType::class, $client);
+        
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){            
+            $em->persist($client);
+            $em->flush();
+            
+            return $this->redirectToRoute('mes_clients');
+        }
+        
+        return $this->render('EasygestionBundle:Ia/Clients:clients.html.twig', array(
+            'c_year' => $current_year,
+            'c_month' => $current_month,
+            'clients' => $clients,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * Add and show client
+     *
+     * @param Client  $client
+     * 
+     * @Route("/remove/{id}", name="client_remove")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function removeClientAction(Client $client)
+    {       
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($client);
+        $em->flush();
+
+        return $this->redirectToRoute('mes_clients');
+    }
+    
 }

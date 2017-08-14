@@ -12,9 +12,9 @@
             <li role="separator" class="divider"></li>
             <li><a href="{{ path('mes_besoins') }}">Mes besoins</a></li>
             <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
-            <li><a href="{{ path('clients') }}">Clients</a></li>
+            <li><a href="{{ path('mes_clients') }}">Clients</a></li>
             <li><a href="{{ path('home_bp', {'annee': c_year, 'mois': c_month}) }}">Business Plan</a></li>
-            <li><a href="#}">Mon profil</a></li>
+            <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
         </ul>
     </div>
     
@@ -40,10 +40,10 @@
             </div>
                         
             <div class="col-md-3">
-                <a href="{{ path('clients') }}">
+                <a href="{{ path('mes_clients') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="80px">
-                        <div class="clear"></div><span>Les clients</span>
+                        <div class="clear"></div><span>Clients</span>
                     </div>
                 </a>
             </div>
@@ -58,7 +58,7 @@
             </div>
                         
             <div class="col-md-3">
-                <a href="#">
+                <a href="{{ path('fos_user_profile_show') }}">
                     <div class="link">
                         <img src="{{ asset('img/logo.jpeg') }}" width="80px">
                         <div class="clear"></div><span>Mon profil</span>

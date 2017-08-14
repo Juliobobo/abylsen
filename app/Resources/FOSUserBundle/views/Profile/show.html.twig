@@ -1,8 +1,19 @@
 {% extends "::base.html.twig" %}
 
 {% block fos_user_content %}
-    <div>
-        <a href="{{ path('besoins_ia') }}">Retour</a>
+    <div class="navigation btn-group">
+        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+            class="glyphicon glyphicon-arrow-left">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('home_ia') }}">Home Ia</a></li>
+            <li><a href="{{ path('mes_besoins') }}">Mes besoins</a></li>
+            <li><a href="{{ path('besoins_archives') }}">Besoins archivés</a></li>
+            <li><a href="{{ path('mes_clients') }}">Clients</a></li>
+        </ul>
     </div>
     {% include "FOSUserBundle:Profile:show_content.html.twig" %}
 {% endblock fos_user_content %}

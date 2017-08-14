@@ -79,3 +79,10 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+    registration:
+        form:
+            type: EasygestionBundle\Form\RegistrationType
+    profile:
+        form:
+            type: EasygestionBundle\Form\ProfileType
+    
