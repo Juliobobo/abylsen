@@ -51,22 +51,21 @@
                            <a href="#" id="reunion">
                                <div class="link">
                                     <img src="{{ asset('img/interdit.png') }}" width="160px">   
-                       {% endif %}                      
+                       {% endif %}
+                        <div class="clear"></div><span>Réunion business</span>
                    {% endif %}
-                                <div class="clear"></div><span>Réunion business</span>
+                               
                        </div>
                    </a>
                 </div>
                 <div class="col-md-4">
                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                    <a href="{{ path('home_ia') }}">                 
-                   {% else %}
-                   <a href="#" id="ia">
-                   {% endif %}
-                       <div class="link">
-                            <img src="{{ asset('img/logo.jpeg') }}" width="160px">
-                            <div class="clear"></div><span>Ingénieur d'affaires</span>
-                       </div>
+                   <div class="link">
+                        <img src="{{ asset('img/logo.jpeg') }}" width="160px">
+                        <div class="clear"></div><span>Ingénieur d'affaires</span>
+                    </div>
+                   {% endif %}    
                     </a>
                 </div>
            </div>
