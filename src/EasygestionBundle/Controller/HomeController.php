@@ -23,9 +23,4 @@ class HomeController extends Controller
     {
         return $this->render('EasygestionBundle:Home:home.html.twig');
     }
-    
-    public function getParent()
-    {
-        return 'FOSUserBundle';
-    }
 }

@@ -11,8 +11,4 @@ sg_datatables_bundle:
 easygestion:
     resource: "@EasygestionBundle/Controller"
     type: annotation
-
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
     

@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Sg\DatatablesBundle\SgDatatablesBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new AppBundle\AppBundle(),
             new EasygestionBundle\EasygestionBundle(),
         ];
 
