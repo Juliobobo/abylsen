@@ -184,6 +184,8 @@ class BpController extends Controller
      */
     public function newConsultantAction(Request $request)
     {
+        $i = 1;
+        
         $consultant = new Consultant();
         
         $form = $this->createForm(ConsultantType::class, $consultant);
@@ -204,6 +206,7 @@ class BpController extends Controller
         return $this->render('EasygestionBundle:Ia/Bp:new.html.twig', array(
             'consultant' => $consultant,
             'form' => $form->createView(),
+            'i' => $i,
         ));
     }
     
@@ -219,6 +222,8 @@ class BpController extends Controller
      */
     public function newConsultantInformationsAction(Request $request)
     {
+        $i = 0;
+        
         $consultant_infos = new ConsultantInformations();
         
         $form = $this->createForm(ConsultantInformationsType::class, $consultant_infos, array(
@@ -242,6 +247,7 @@ class BpController extends Controller
         return $this->render('EasygestionBundle:Ia/Bp:new.html.twig', array(
             'consultant' => $consultant_infos,
             'form' => $form->createView(),
+            'i' => $i,
         ));
     }
    

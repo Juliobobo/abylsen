@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h2>Nouveau consultant</h2>
+    <h2>Nouveau besoin</h2>
     
     <div class="clear"></div> <br>
     
@@ -11,5 +11,5 @@
     {{ form_end(form) }}
 
     <hr>
-    <a href="" class="btn btn-primary">Revenir à la liste</a>
+    <a href="{{ path('mes_besoins') }}" class="btn btn-primary">Revenir</a>
 {% endblock %}

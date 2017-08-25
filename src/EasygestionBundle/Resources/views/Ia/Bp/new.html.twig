@@ -1,8 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h2>Nouveau consultant</h2>
-    
+    {% if i == 1 %}
+        <h2>Nouveau consultant</h2>
+        {% elseif i == 0 %}
+            <h2>Nouvelle fiche</h2>
+    {% endif %}
     <div class="clear"></div> <br>
     
     {{ form_start(form) }}
@@ -10,6 +13,4 @@
         <input type="submit" value="Créer" class="btn btn-primary" />
     {{ form_end(form) }}
 
-    <hr>
-    <a href="" class="btn btn-primary">Revenir à la liste</a>
 {% endblock %}
