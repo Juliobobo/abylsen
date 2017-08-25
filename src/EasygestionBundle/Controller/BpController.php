@@ -67,7 +67,6 @@ class BpController extends Controller
                 $mois_bis = 'Décembre';
                 break;
         }
-        return $mois_bis;
     }
     
     public function form(Request $request, $param, $mois) {
@@ -281,10 +280,74 @@ class BpController extends Controller
             ));
         }
 
-        return $this->render('EasygestionBundle:Ia/Bp:edit_frais.html.twig', array(
+        return $this->render('EasygestionBundle:Ia/Bp:edit.html.twig', array(
             'c_year' => $current_year,
             'c_month' => $current_month,
             'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * Displays a form to edit an existing fiche.
+     *
+     * @param Request $request
+     * @param ConsultantInformations  $fiche
+     *
+     * @Route("/fiche/{id}/edit", name="fiche_edit", options = {"expose" = true})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function editFiche(Request $request, ConsultantInformations  $fiche)
+    {        
+        
+        $current_year = date('Y');
+        $current_month = (int) date('m');
+     
+        $form = $this->createForm(ConsultantInformationsType::class, $fiche, array(
+            'ia' => $this->getUser(),
+        ));
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('home_bp', array(
+                'annee' => date('Y'),
+                'mois' => (int) date('m'),
+            ));
+        }
+
+        return $this->render('EasygestionBundle:Ia/Bp:edit.html.twig', array(
+            'c_year' => $current_year,
+            'c_month' => $current_month,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    
+     /**
+     * Remove fiche
+     *
+     * @param ConsultantInformations  $fiche
+     * 
+     * @Route("/fiche/{id}/remove", name="fiche_remove")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function removeClientAction(ConsultantInformations  $fiche)
+    {       
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($fiche);
+        $em->flush();
+
+        return $this->redirectToRoute('home_bp' , array(
+            'annee' => date('Y'),
+            'mois' => (int) date('m'),
         ));
     }
 }

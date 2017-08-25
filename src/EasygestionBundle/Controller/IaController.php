@@ -305,7 +305,7 @@ class IaController extends Controller
     }
     
     /**
-     * Add and show client
+     * Remove client
      *
      * @param Client  $client
      * 

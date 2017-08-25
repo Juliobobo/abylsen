@@ -32,6 +32,15 @@ class LoadData implements FixtureInterface
         $userAdmin->setRoles(array('ROLE_ADMIN'));
         $userAdmin->setInitials('jdi');
         $manager->persist($userAdmin);
+        
+        $userAdmin1 = new Ia();
+        $userAdmin1->setUsername('Pascal');
+        $userAdmin1->setPlainPassword('root');
+        $userAdmin1->setEmail('pascal.panek@abylsen.com');
+        $userAdmin1->setEnabled(true);
+        $userAdmin1->setRoles(array('ROLE_ADMIN'));
+        $userAdmin1->setInitials('ppa');
+        $manager->persist($userAdmin1);
 
         // User
         $user1 = new Ia();
@@ -91,16 +100,7 @@ class LoadData implements FixtureInterface
             } else {
                 $besoin[$i]->setCreatedBy($userAdmin);
             }
-
-            // Comments
-            /*for ($c = 1; $c <= 4; $c++) {
-                /** @var Comment[] $comment */
-               /* $comment[$c] = new Comment();
-                $comment[$c]->setTitle('Comment '.$c);
-                $comment[$c]->setContent($this->getCommentContent());
-                $post[$i]->addComment($comment[$c]);
-            }*/
-
+            
             $manager->persist($besoin[$i]);
         }
         
