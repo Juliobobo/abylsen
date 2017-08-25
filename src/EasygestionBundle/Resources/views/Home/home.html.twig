@@ -9,7 +9,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="login"> 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <h1> Bonjour {{ app.user }} </h1>
+                    <h1> Bonjour {{ app.user.initials }} </h1>
                 {% else %}
                     <h1> Login </h1>
                 {% endif %}
