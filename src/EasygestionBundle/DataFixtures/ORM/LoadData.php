@@ -43,7 +43,7 @@ class LoadData implements FixtureInterface
         $manager->persist($userAdmin1);
 
         // User
-        $user1 = new Ia();
+        /*$user1 = new Ia();
         $user1->setUsername('killian');
         $user1->setPlainPassword('user');
         $user1->setEmail('killian.sublet@abylsen.com');
@@ -73,7 +73,7 @@ class LoadData implements FixtureInterface
         $now = new \DateTime();
         for ($i = 1; $i <= 100; $i++) {
             /** @var Post[] $post */
-            $besoin[$i] = new Besoin();
+            /*$besoin[$i] = new Besoin();
             $besoin[$i]->setStatus(rand(0, 1));
             $besoin[$i]->setPriority(rand(1, 3));
             $besoin[$i]->setDateCreation($now);
@@ -102,7 +102,7 @@ class LoadData implements FixtureInterface
             }
             
             $manager->persist($besoin[$i]);
-        }
+        }*/
         
         $manager->flush();
     }
